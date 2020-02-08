@@ -3,3 +3,18 @@ https://link.springer.com/article/10.1186/1471-2105-14-S15-S10
 https://www.pnas.org/content/106/14/5714.full
 https://www.biorxiv.org/content/biorxiv/early/2019/03/08/559054.full.pdf
 https://fricke.co.uk/Research/KomPhy/Thesis.pdf
+
+https://towardsdatascience.com/molecular-phylogenetics-using-bio-phylo-57ce27492ee9
+
+BioProject:
+https://www.ncbi.nlm.nih.gov/bioproject
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2515873/
+
+ClustalWL
+https://www.tacoma.uw.edu/sites/default/files/global/documents/institute_tech/rpotter.pdf
+
+Sources:
+BioPython Doc:
+https://biopython.org/DIST/docs/api/
+Data sets:
+https://www.nisc.nih.gov/data/prasad_2008_mbe/
