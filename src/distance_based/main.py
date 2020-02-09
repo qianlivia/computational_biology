@@ -2,7 +2,6 @@ from Bio import SeqIO
 from Bio.Align import MultipleSeqAlignment
 from Bio.Alphabet import IUPAC, Gapped
 from distance_calculator import Distance_Calculator
-from distance_calculator import Matrix, Vector
 
 file_name = "data/coding.fa"
 alignment = MultipleSeqAlignment([], Gapped(IUPAC.unambiguous_dna, "-"))
@@ -17,5 +16,5 @@ print(alignment)
 
 dc = Distance_Calculator()
 dm = dc.create_distance_matrix(alignment)
-print(dm)
+dm.data.to_csv("animals.csv")
 dc.build_tree(dm)
