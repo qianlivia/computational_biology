@@ -5,12 +5,19 @@ from Bio import AlignIO
 from Bio import SeqIO
 from Bio.Align import MultipleSeqAlignment
 from Bio.Alphabet import IUPAC, Gapped
+import time
+
+# Prettify labels
+def get_label(leaf):
+    if leaf.name.startswith("Inner"):
+        return ""
+    return leaf.name.replace("_", " ")
 
 # Read the sequences and align
 
 aln = MultipleSeqAlignment([], Gapped(IUPAC.unambiguous_dna, "-"))
-# for seq_record in SeqIO.parse("data/coding.fa", "fasta"):
-for seq_record in SeqIO.parse("data/cons_noncode.fa", "fasta"):
+for seq_record in SeqIO.parse("data/coding.fa", "fasta"):
+# for seq_record in SeqIO.parse("data/cons_noncode.fa", "fasta"):
     print(seq_record.id)
     print(repr(seq_record.seq))
     print(len(seq_record))
@@ -29,13 +36,36 @@ print(dm)
 
 # Construct the phylogenetic tree using UPGMA algorithm
 constructor = DistanceTreeConstructor()
-tree = constructor.upgma(dm)
+
+print("Neighbor joining")
+start = time.time()
+tree = constructor.nj(dm)
+end = time.time()
+print("Neigbor joining run in {} seconds.".format(end - start))
 
 # Draw the phylogenetic tree
-Phylo.draw(tree)
+Phylo.draw(tree, label_func=get_label)
 
 # Print the phylogenetic tree in the terminal
 print('\nPhylogenetic Tree\n===================')
 Phylo.draw_ascii(tree)
 
 print("----------------------")
+
+"""
+print("UPGMA")
+
+start = time.time()
+tree = constructor.upgma(dm)
+end = time.time()
+print("UPGMA run in {} seconds.".format(end - start))
+
+# Draw the phylogenetic tree
+Phylo.draw(tree, label_func=get_label)
+
+# Print the phylogenetic tree in the terminal
+print('\nPhylogenetic Tree\n===================')
+Phylo.draw_ascii(tree)
+
+print("----------------------")
+"""

@@ -2,6 +2,7 @@ from typing import List
 from Bio.Align import MultipleSeqAlignment
 from Bio.Alphabet import IUPAC, Gapped
 from Bio.Phylo import BaseTree
+from Bio.Phylo import draw
 import itertools
 from utils import Matrix, Vector
 
@@ -10,6 +11,7 @@ class Distance_Calculator():
     def __init__(self, mode='NJ'):
         """ Mode: NJ, UPGMA, WPGMA. """
         self.mode = mode
+        self.tree = None
 
     def _pairwise_distance(self, sequence1, sequence2):
         sum = 0
@@ -38,22 +40,27 @@ class Distance_Calculator():
             self._wpgma(dm)
 
     def _neigbor_joining(self, dm: Matrix):
+        """ Neighbor joining.
+            dm: distance matrix
+        """
         # Create tree nodes
         clades = [BaseTree.Clade(None, name) for name in dm.labels]
         nr_inner = 0
 
         N = dm.size
 
-        while N > 1:
+        # Run until two nodes remain.
+        while N > 2:
+            labels = dm.labels
             # Divergence
-            divergence = Vector(dm.labels)
-            for label in dm.labels:
+            divergence = Vector(labels)
+            for label in labels:
                 # Sum up all the distances for the given label
-                divergence[label] = sum([dm[label][i] for i in dm.labels]) + sum([dm[i][label] for i in dm.labels])
+                divergence[label] = sum([dm[label][i] for i in labels]) + sum([dm[i][label] for i in labels])
 
             # New distance matrix
-            dm_new = Matrix(dm.labels)
-            for label1, label2 in itertools.combinations(dm.labels, 2):
+            dm_new = Matrix(labels)
+            for label1, label2 in itertools.combinations(labels, 2):
                 dm_new[label1][label2] = dm[label1][label2] - (divergence[label1] + divergence[label2]) / (N - 2)
 
             # Find the index of the smallest value in the distance matrix
@@ -73,29 +80,58 @@ class Distance_Calculator():
             inner_clade.clades.append(c1)
             inner_clade.clades.append(c2)
 
-            # Calculate the distance from the new node to all the other nodes (not including the ones we want to remove)
-            dm.labels.remove(argmin1)
-            dm.labels.remove(argmin2)
+            # Calculate the distance from the new node to all the other nodes (not including the ones we want to remove).
+            dm.add(node_name)
+            
+            neighbor_labels = set(labels) - {node_name, argmin1, argmin2}
+            for label in neighbor_labels:
+                dm[label][node_name] = (dm[argmin1][label] + dm[label][argmin1] + dm[argmin2][label] + dm[label][argmin2] - dm[argmin1][argmin2]) / 2
 
-            for label in dm.labels:
-                dm[node_name][label] = (dm[argmin1][label] + dm[argmin2][label] - dm[argmin1][argmin2]) / 2
-
-            # Delete appropriate rows and columns
-            dm.drop_columns([argmin1, argmin2])
-            dm.drop_rows([argmin1, argmin2])
+            # Delete appropriate rows, columns and labels.
+            dm.drop([argmin1, argmin2])
 
             # Replace one of the nodes with the new node and discard the other one
             clades[minpos1] = inner_clade
             del clades[minpos2]
             nr_inner += 1
 
-            dm.labels.append(node_name)
-
             # Number of nodes remaining
             N = dm.size
 
+        # Create last inner node
+        node_name = "Inner{}".format(nr_inner)
+        inner_clade = BaseTree.Clade(None, node_name)
+
+        # Append last two nodes
+        inner_clade.clades.append(clades[0])
+        inner_clade.clades.append(clades[1])
+
+        # Create tree
+        self.tree = BaseTree.Tree(inner_clade, rooted=False)
+
+    def get_label(self, leaf):
+        """
+        Prettify tree labels.
+        leaf: current leaf
+        """
+        if leaf.name.startswith("Inner"):
+            return ""
+        return leaf.name.replace("_", " ")
+
     def _upgma(self, dm: Matrix):
+        """ UPGMA.
+            dm: distance matrix
+        """
         pass
 
     def _wpgma(self, dm: Matrix):
+        """ WPGMA.
+            dm: distance matrix
+        """
         pass
+
+    def draw_tree(self):
+        if self.tree is None:
+            print("Please first build the tree.")
+        else:
+            draw(self.tree, label_func=self.get_label)
