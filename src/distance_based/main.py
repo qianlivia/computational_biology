@@ -13,6 +13,7 @@ for seq_record in SeqIO.parse(file_name, "fasta"):
     print(len(seq_record))
     alignment.extend([seq_record])
 
+"""
 # Print the alignment
 print(alignment)
 
@@ -24,4 +25,14 @@ start = time.time()
 dc.build_tree(dm)
 end = time.time()
 print("Neighbor joining run in {} seconds.".format(end - start))
+dc.draw_tree()
+"""
+
+dc = Distance_Calculator(mode="UPGMA")
+dm = dc.create_distance_matrix(alignment)
+
+start = time.time()
+dc.build_tree(dm)
+end = time.time()
+print("UPGMA run in {} seconds.".format(end - start))
 dc.draw_tree()

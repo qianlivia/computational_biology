@@ -70,13 +70,22 @@ class Matrix():
     def argmax(self):
         return (self.data.max(axis=0).idxmax(), self.data.max(axis=1).idxmax())
 
-    def argmin(self):
+    def argmin(self, exclude_zeros=False):
+        if exclude_zeros:
+            mask = (self.data == 0)
+            masked_data = self.data.mask(mask, np.inf, inplace=False)
+            return (masked_data.min(axis=0).idxmin(), masked_data.min(axis=1).idxmin())
         return (self.data.min(axis=0).idxmin(), self.data.min(axis=1).idxmin())
 
     def posmax(self):
         a, b = np.unravel_index(np.argmax(self.data.values, axis=None), self.data.values.shape)
         return b, a
 
-    def posmin(self):
-        a, b = np.unravel_index(np.argmin(self.data.values, axis=None), self.data.values.shape)
+    def posmin(self, exclude_zeros=False):
+        if exclude_zeros:
+            mask = (self.data == 0)
+            masked_data = self.data.mask(mask, np.inf, inplace=False)
+            a, b = np.unravel_index(np.argmin(masked_data.values, axis=None), masked_data.values.shape)
+        else:
+            a, b = np.unravel_index(np.argmin(self.data.values, axis=None), self.data.values.shape)
         return b, a

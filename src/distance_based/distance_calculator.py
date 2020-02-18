@@ -122,7 +122,63 @@ class Distance_Calculator():
         """ UPGMA.
             dm: distance matrix
         """
-        pass
+        # Create tree nodes
+        clades = [BaseTree.Clade(0, name) for name in dm.labels]
+        nr_inner = 0
+
+        # Number of nodes
+        N = dm.size
+        
+        # Run until two nodes remain.
+        while N > 2:
+            # Find the index of the smallest value in the distance matrix
+            argmin1, argmin2 = dm.argmin(exclude_zeros=True) # Labels belonging to the smallest value
+            minpos1, minpos2 = dm.posmin(exclude_zeros=True) # Indices belonging to the smallest value
+            c1, c2 = clades[minpos1], clades[minpos2] # Fetch the corresponding clades
+
+            # New inner node
+            node_name = "Inner{}".format(nr_inner)
+            inner_clade = BaseTree.Clade(0, node_name)
+
+            # Calculate branch length for the two old nodes
+            # TODO this needs to be rewritten
+            c1.branch_length = dm[argmin1][argmin2]/2 - clades[minpos1].branch_length
+            c2.branch_length = dm[argmin1][argmin2]/2 - clades[minpos2].branch_length
+            
+
+            # Append these to the new node
+            inner_clade.clades.append(c1)
+            inner_clade.clades.append(c2)
+
+            # Calculate the distance from the new node to all the other nodes (not including the ones we want to remove).
+            dm.add(node_name)
+
+            neighbor_labels = set(dm.labels) - {node_name, argmin1, argmin2}
+            for label in neighbor_labels:
+            # TODO this needs to be rewritten
+                dm[label][node_name] = (dm[argmin1][label] + dm[label][argmin1] + dm[argmin2][label] + dm[label][argmin2]) / 2
+
+            # Delete appropriate rows, columns and labels.
+            dm.drop([argmin1, argmin2])
+
+            # Replace one of the nodes with the new node and discard the other one
+            clades[minpos1] = inner_clade
+            del clades[minpos2]
+            nr_inner += 1
+
+            # Number of nodes remaining
+            N = dm.size
+
+        # Create last inner node
+        node_name = "Inner{}".format(nr_inner)
+        inner_clade = BaseTree.Clade(None, node_name)
+        
+        # Append last two nodes
+        inner_clade.clades.append(clades[0])
+        inner_clade.clades.append(clades[1])
+
+        # Create tree
+        self.tree = BaseTree.Tree(inner_clade, rooted=False)
 
     def _wpgma(self, dm: Matrix):
         """ WPGMA.
