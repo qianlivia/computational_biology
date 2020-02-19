@@ -1,7 +1,7 @@
 from Bio import SeqIO
 from Bio.Align import MultipleSeqAlignment
 from Bio.Alphabet import IUPAC, Gapped
-from distance_calculator import Distance_Calculator
+from tools.distance_calculator import Distance_Calculator
 import time
 
 file_name = "data/coding.fa"
@@ -36,3 +36,14 @@ dc.build_tree(dm)
 end = time.time()
 print("UPGMA run in {} seconds.".format(end - start))
 dc.draw_tree()
+
+"""
+dc = Distance_Calculator(mode="WPGMA")
+dm = dc.create_distance_matrix(alignment)
+
+start = time.time()
+dc.build_tree(dm)
+end = time.time()
+print("WPGMA run in {} seconds.".format(end - start))
+dc.draw_tree()
+"""
