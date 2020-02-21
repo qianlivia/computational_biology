@@ -18,3 +18,9 @@ BioPython Doc:
 https://biopython.org/DIST/docs/api/
 Data sets:
 https://www.nisc.nih.gov/data/prasad_2008_mbe/
+
+ANN classification
+https://www.researchgate.net/publication/261430743_Neural_network_based_phylogenetic_analysis
+
+Lexture on different methods:
+http://helper.ipam.ucla.edu/publications/gentut/gentut_9950.pdf

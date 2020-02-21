@@ -1,6 +1,5 @@
 from typing import List
 from Bio.Align import MultipleSeqAlignment
-from Bio.Alphabet import IUPAC, Gapped
 from Bio.Phylo import BaseTree
 from Bio.Phylo import draw
 import itertools
