@@ -1,5 +1,6 @@
 
 from Bio.Phylo.BaseTree import Clade
+from collections import Counter
 
 class ParsimonyClade(Clade):
     
@@ -19,7 +20,7 @@ class ParsimonyClade(Clade):
     def __str__(self):
         return super(ParsimonyClade, self).__str__()
 
-def remove_unprocessed(self, lst: list):
+def remove_unprocessed(lst: list):
     """
     Remove clades that do not occur as many times as how many children they have.
 

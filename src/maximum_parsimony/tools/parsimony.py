@@ -10,7 +10,7 @@ class Parsimony():
     Class for methods using maximum parsimony.
     """
 
-    def __init__(self, alignment: MultipleSeqAlignment, bnb = True: bool):
+    def __init__(self, alignment: MultipleSeqAlignment, bnb: bool = True):
         """
         Constructor.
 
@@ -28,41 +28,40 @@ class Parsimony():
 
         self.size = len(self.leaves) # Number of taxa
         self.length = alignment.get_alignment_length() # Length of taxa
-        self.bnb = bnb # Branch and bound
+        self.bnb = bnb # Branch and bound. If false, use exhaustive search.
 
     def run(self):
         """
         Run the algorithm.
         """
-        
         # Generate all the trees
         trees = self.generate_trees()
+
+        # Maximum search
+        maxi = np.inf
+        max_tree = None
+        for tree in trees:
+            print(trees)
+            print()
+        self.tree = max_tree
 
     def generate_trees(self):
         """
         Generate all possible trees.
         """
+        trees = [self.leaves[0]]
         if self.size == 1:
-            return self.leaves
-
-        c1 = self.leaves[0]
-        c2 = self.leaves[1]
-        node_name = "Inner{}".format(0)
-        inner_clade = BaseTree.Clade(None, node_name)
-        inner_clade.clades.append(c1)
-        inner_clade.clades.append(c2)
-        trees = [inner_clade]
-
-        if self.size == 2:
             return trees
 
-        for i in range(2, self.size):
+        for i in range(1, 5):
             curr_leaf = self.leaves[i]
             new_trees = []
             for tree in trees:
                 new_trees.extend(self.add_leaf(tree, curr_leaf))
             trees = new_trees
 
+        # TODO optimize
+        trees = [self.create_tree(tree) for tree in trees]
         return trees
 
     def add_leaf(self, root: BaseTree.Clade, leaf: BaseTree.Clade):
@@ -72,11 +71,60 @@ class Parsimony():
         root: root defining the given tree
         leaf: leaf to be added
 
-        returns: trees after the leaf has been added in every possible combination
+        returns: trees after the leaf has been added in every possible combination (represented by their roots)
         """
-        c1 = root.clades.clade[0]
-        c2 = root.clades.clade[1]
-        
+
+        # There are three different kinds of tree formation.
+
+        # No. 1.: create a new root; let the old root be the left subtree and the leaf the right one.
+        # TODO: inner node names?
+        inner_clade = self.create_inner_node(root, leaf)
+        new_trees = [inner_clade]
+
+        # If the root is a leaf, return current state.
+        if not root.clades:
+            return new_trees
+
+        left = root.clades[0] # Left subtree
+        right = root.clades[1] # right subtree
+
+        # No. 2.: Append the leaf to the left subtree recursively.
+        subtrees = self.add_leaf(left, leaf)
+        for subtree in subtrees:
+            inner_clade = self.create_inner_node(subtree, right)
+            new_trees.append(inner_clade)
+
+        # No. 3.: Append the leaf to the right subtree recursively.
+        subtrees = self.add_leaf(right, leaf)
+        for subtree in subtrees:
+            inner_clade = self.create_inner_node(left, subtree)
+            new_trees.append(inner_clade)
+
+        return new_trees
+
+    def create_tree(self, root: BaseTree.Clade):
+        """
+        Create tree with given root.
+
+        root: root
+
+        returns: tree
+        """
+        return BaseTree.Tree(root, rooted=False)
+
+    def create_inner_node(self, left: BaseTree.Clade, right: BaseTree.Clade, name: str = None):
+        """
+        Create root with given left and right subtree.
+
+        left: root of left subtree
+        right: root of right subtree
+
+        returns: root of new tree
+        """
+        root = BaseTree.Clade(None, name)
+        root.clades.append(left)
+        root.clades.append(right)
+        return root
 
     def calc_parsimony(self, tree: BaseTree.Tree, parents: dict):
         """
@@ -124,8 +172,8 @@ class Parsimony():
             # Iterate over inner nodes.
             for node in nodes_to_be_processed:
                 children = node.clades
-                X = {} # Intersection
-                Y = {} # Union
+                X = set() # Intersection
+                Y = set() # Union
 
                 # Find the intersection and the union of the children sets.
                 for child in children:
@@ -143,7 +191,7 @@ class Parsimony():
                 # Check if current node has a parent.
                 if node in parents:
                     # Add the parent of the current node to the list of nodes to be processed.
-                    next_nodes.add(parent)
+                    next_nodes.append(parent)
 
             # Remove clades that do not occur as many times as how many children they have.
             nodes_to_be_processed = remove_unprocessed(next_nodes)

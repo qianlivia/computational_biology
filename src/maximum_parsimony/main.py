@@ -11,8 +11,9 @@ def main():
     for seq_record in SeqIO.parse(file_name, "fasta"):
         alignment.extend([seq_record])
 
+    # print(alignment)
     par = Parsimony(alignment)
-    
+    par.run()
 
 if __name__ == '__main__':
     main()
