@@ -14,6 +14,7 @@ def main():
     # print(alignment)
     par = Parsimony(alignment)
     par.run()
+    par.draw_tree()
 
 if __name__ == '__main__':
     main()

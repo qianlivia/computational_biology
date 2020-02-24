@@ -24,7 +24,12 @@ class Parsimony():
         for sequence in alignment:
             leaf = BaseTree.Clade(None, sequence.id)
             self.leaves.append(leaf)
-            self.taxa[leaf] = sequence.seq
+
+            # Create a list of sets containing bases
+            base_sets = []
+            for char in sequence.seq:
+                base_sets.append({char})
+            self.taxa[leaf] = base_sets
 
         self.size = len(self.leaves) # Number of taxa
         self.length = alignment.get_alignment_length() # Length of taxa
@@ -46,37 +51,83 @@ class Parsimony():
         """
         Generate all possible trees.
         """
-        trees = [self.leaves[0]]
+        first_leaf = self.leaves[0]
+        first_leaf_sets = self.taxa[first_leaf]
+        first_leaf_score = 0
+        children_data = {}
+
+        # The first tree, and the corresponding sets (that contain bases) along with the initial parsimony score
+        # and the corresponding properties of the child nodes (which don't exist since the first node is a leaf).
+        trees = [(first_leaf, first_leaf_sets, first_leaf_score, children_data)]
+
+        # If there is only one species, return the current tree.
         if self.size == 1:
             return trees
 
         for i in range(1, 3):
             curr_leaf = self.leaves[i]
             new_trees = []
-            for tree in trees:
-                new_trees.extend(self.add_leaf(tree, curr_leaf))
+            for tree, sets, score, children_data in trees:
+                new_trees.extend(self.add_leaf(tree, curr_leaf, sets, score, children_data))
             trees = new_trees
 
         # TODO optimize
-        trees = [self.create_tree(tree) for tree in trees]
+        # Turn root nodes into trees.
+        trees = [self._create_tree(tree) for tree, _, _, _ in trees]
         return trees
 
-    def add_leaf(self, root: BaseTree.Clade, leaf: BaseTree.Clade):
+    def _calc_parsimony_score(
+        self,
+        left: BaseTree.Clade,
+        right: BaseTree.Clade,
+        left_sets: list,
+        left_score: int,
+        right_sets: list,
+        right_score: int,
+        threshold: int = np.inf):
+        score = 0
+        sets = []
+        # TODO
+
+        return True, sets, score
+
+    def add_leaf(self,
+        root: BaseTree.Clade,
+        leaf: BaseTree.Clade,
+        root_sets: list,
+        root_score: int,
+        children_data: dict,
+        threshold: int = np.inf):
         """
         Add leaf to a tree.
 
         root: root defining the given tree
         leaf: leaf to be added
+        root_sets: 
+        root_score: 
+        chidren_data: 
+        threshold: the best result so far (the lower the better)
 
         returns: trees after the leaf has been added in every possible combination (represented by their roots)
         """
+        # TODO: inner node names?
+        new_trees = []
 
         # There are three different kinds of tree formation.
 
         # No. 1.: create a new root; let the old root be the left subtree and the leaf the right one.
-        # TODO: inner node names?
-        inner_clade = self.create_inner_node(root, leaf)
-        new_trees = [inner_clade]
+        # If the calculated score is over the threshold, don't return this tree.
+        # If it isn't, return both the new root and the corresponding score.
+        under_threshold, sets_of_bases, score = \
+            self._calc_parsimony_score(root, leaf, root_sets, root_score, self.taxa[leaf], 0, threshold)
+        if under_threshold:
+            inner_clade = self._create_inner_node(root, leaf)
+            children_data = {
+                'left_sets': root_sets,
+                'left_score': root_score,
+                'right_sets': self.taxa[leaf],
+                'right_score': 0}
+            new_trees.append((inner_clade, sets_of_bases, score, children_data))
 
         # If the root is a leaf, return current state.
         if not root.clades:
@@ -85,21 +136,45 @@ class Parsimony():
         left = root.clades[0] # Left subtree
         right = root.clades[1] # right subtree
 
-        # No. 2.: Append the leaf to the left subtree recursively.
+        # No. 2.: Append the leaf to the left subtree in every possible combination, recursively.
+        # If the calculated score is over the threshold, don't return this tree.
+        # If it isn't, return both the new root and the corresponding score.
         subtrees = self.add_leaf(left, leaf)
-        for subtree in subtrees:
-            inner_clade = self.create_inner_node(subtree, right)
-            new_trees.append(inner_clade)
+        for subtree, subtree_sets, subtree_score in subtrees:
+            under_threshold, sets, score = \
+                self._calc_parsimony_score(
+                subtree,
+                right,
+                subtree_sets,
+                subtree_score,
+                children_data['right_sets'],
+                children_data['right_score'],
+                threshold)
+            if under_threshold:
+                inner_clade = self._create_inner_node(subtree, right)
+                new_trees.append((inner_clade, sets, score, children_data))
 
-        # No. 3.: Append the leaf to the right subtree recursively.
+        # No. 3.: Append the leaf to the right subtree in every possible combination, recursively.
+        # If the calculated score is over the threshold, don't return this tree.
+        # If it isn't, return both the new root and the corresponding score.
         subtrees = self.add_leaf(right, leaf)
-        for subtree in subtrees:
-            inner_clade = self.create_inner_node(left, subtree)
-            new_trees.append(inner_clade)
+        for subtree, subtree_sets, subtree_score in subtrees:
+            under_threshold, sets, score = \
+                self._calc_parsimony_score(
+                left,
+                subtree,
+                children_data['left_sets'],
+                children_data['left_score'],
+                subtree_sets,
+                subtree_score,
+                threshold)
+            if under_threshold:
+                inner_clade = self._create_inner_node(left, subtree)
+                new_trees.append((inner_clade, sets, score, children_data))
 
         return new_trees
 
-    def create_tree(self, root: BaseTree.Clade):
+    def _create_tree(self, root: BaseTree.Clade):
         """
         Create tree with given root.
 
@@ -109,7 +184,7 @@ class Parsimony():
         """
         return BaseTree.Tree(root, rooted=False)
 
-    def create_inner_node(self, left: BaseTree.Clade, right: BaseTree.Clade, name: str = None):
+    def _create_inner_node(self, left: BaseTree.Clade, right: BaseTree.Clade, name: str = None):
         """
         Create root with given left and right subtree.
 
