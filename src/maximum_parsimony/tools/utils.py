@@ -12,10 +12,12 @@ class ParsimonyClade(Clade):
         confidence=None,
         color=None,
         width=None,
-        parent=None
+        sets=None,
+        score=0
     ):
         super(ParsimonyClade, self).__init__(branch_length, name, clades, confidence, color, width)
-        self.parent = parent
+        self.sets = sets
+        self.score = score
 
     def __str__(self):
         return super(ParsimonyClade, self).__str__()
