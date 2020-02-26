@@ -3,7 +3,7 @@ from Bio.Phylo import BaseTree
 from Bio.Phylo import draw
 from Bio.Align import MultipleSeqAlignment
 from collections import Counter
-from tools.utils import remove_unprocessed
+from tools.utils import remove_unprocessed, ParsimonyClade
 
 class Parsimony():
     """
@@ -17,17 +17,30 @@ class Parsimony():
         alignment: MultipleSeqAlignment containing the alignment
         """
         self.tree = None # Best tree
+        self.trees = [] # Complete trees
 
         # Create the dictionary (and list) of taxa
         self.leaves = [] # Leaves as clades
         self.taxa = {} # Node-sequence pairs
+
+        # For every alignment, create corresponding leaves and sets.
         for sequence in alignment:
-            leaf = BaseTree.Clade(None, sequence.id)
+
+            # Create a list of sets containing bases
+            base_sets = []
+            for char in sequence.seq:
+                base_sets.append({char})
+
+            # Create leaf
+            leaf = ParsimonyClade(None, sequence.id, sets=base_sets, score=0)
             self.leaves.append(leaf)
+
+            # Store the sets
+            # TODO remove
             self.taxa[leaf] = sequence.seq
 
-        self.size = len(self.leaves) # Number of taxa
-        self.length = alignment.get_alignment_length() # Length of taxa
+        self.size = len(self.leaves) # Number of alignments
+        self.length = alignment.get_alignment_length() # Length of each sequence
         self.bnb = bnb # Branch and bound. If false, use exhaustive search.
 
     def run(self):
@@ -35,12 +48,14 @@ class Parsimony():
         Run the algorithm.
         """
         # Generate all the trees
-        trees = self.generate_trees()
+        self.generate_trees()
 
         # Maximum search
-        for tree in trees:
+        for tree in self.trees:
             print(tree)
             print()
+
+        print(len(self.trees))
 
     def generate_trees(self):
         """
@@ -50,33 +65,44 @@ class Parsimony():
         if self.size == 1:
             return trees
 
-        for i in range(1, 3):
-            curr_leaf = self.leaves[i]
-            new_trees = []
-            for tree in trees:
-                new_trees.extend(self.add_leaf(tree, curr_leaf))
-            trees = new_trees
+        # Depth first search
+        trees = self.DFS_trees(trees, 1)
 
-        # TODO optimize
-        trees = [self.create_tree(tree) for tree in trees]
-        return trees
+        # TODO optimize. Maybe put this into add_leaf?
+        self.trees = [self.create_tree(tree) for tree in self.trees]
 
-    def add_leaf(self, root: BaseTree.Clade, leaf: BaseTree.Clade):
+    def DFS_trees(self, queue, leaf_no):
+        # TODO implement branch and bound
+        while queue:
+            tree = queue.pop(0)
+            new_trees = self.add_leaf(tree, self.leaves[leaf_no])
+            if leaf_no < 6 - 1:
+                self.DFS_trees(new_trees, leaf_no + 1)
+            else:
+                self.trees.extend(new_trees)
+
+    def add_leaf(self, root: ParsimonyClade, leaf: ParsimonyClade, threshold = np.inf):
         """
         Add leaf to a tree.
 
         root: root defining the given tree
         leaf: leaf to be added
+        threshold: the best result so far (the lower the better)
 
         returns: trees after the leaf has been added in every possible combination (represented by their roots)
         """
+
+        new_trees = []
+        min_score = threshold
+        min_tree = None
 
         # There are three different kinds of tree formation.
 
         # No. 1.: create a new root; let the old root be the left subtree and the leaf the right one.
         # TODO: inner node names?
-        inner_clade = self.create_inner_node(root, leaf)
-        new_trees = [inner_clade]
+        under_threshold, inner_clade = self.create_inner_node(root, leaf, threshold = threshold)
+        if under_threshold:
+            new_trees.append(inner_clade)
 
         # If the root is a leaf, return current state.
         if not root.clades:
@@ -88,18 +114,20 @@ class Parsimony():
         # No. 2.: Append the leaf to the left subtree recursively.
         subtrees = self.add_leaf(left, leaf)
         for subtree in subtrees:
-            inner_clade = self.create_inner_node(subtree, right)
-            new_trees.append(inner_clade)
+            under_threshold, inner_clade = self.create_inner_node(subtree, right)
+            if under_threshold:
+                new_trees.append(inner_clade)
 
         # No. 3.: Append the leaf to the right subtree recursively.
         subtrees = self.add_leaf(right, leaf)
         for subtree in subtrees:
-            inner_clade = self.create_inner_node(left, subtree)
-            new_trees.append(inner_clade)
+            under_threshold, inner_clade = self.create_inner_node(left, subtree)
+            if under_threshold:
+                new_trees.append(inner_clade)
 
         return new_trees
 
-    def create_tree(self, root: BaseTree.Clade):
+    def create_tree(self, root: ParsimonyClade):
         """
         Create tree with given root.
 
@@ -109,7 +137,7 @@ class Parsimony():
         """
         return BaseTree.Tree(root, rooted=False)
 
-    def create_inner_node(self, left: BaseTree.Clade, right: BaseTree.Clade, name: str = None):
+    def create_inner_node(self, left: ParsimonyClade, right: ParsimonyClade, name: str = None, threshold = np.inf):
         """
         Create root with given left and right subtree.
 
@@ -118,10 +146,11 @@ class Parsimony():
 
         returns: root of new tree
         """
-        root = BaseTree.Clade(None, name)
+        # TODO count parsimony score
+        root = ParsimonyClade(None, name)
         root.clades.append(left)
         root.clades.append(right)
-        return root
+        return True, root
 
     def calc_parsimony(self, tree: BaseTree.Tree, parents: dict):
         """
