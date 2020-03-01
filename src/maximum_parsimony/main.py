@@ -11,9 +11,11 @@ def main():
     for seq_record in SeqIO.parse(file_name, "fasta"):
         alignment.extend([seq_record])
 
-    # print(alignment)
-    par = Parsimony(alignment)
+    par = Parsimony(alignment, bnb=True)
+    start = time.time()
     par.run()
+    end = time.time()
+    print("UPGMA run in {} seconds.".format(end - start))
     par.draw_tree()
 
 if __name__ == '__main__':
