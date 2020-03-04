@@ -89,7 +89,7 @@ class Parsimony():
         while queue:
             tree = queue.pop(0)
 
-            if leaf_no < 8 - 1:
+            if leaf_no < 9 - 1:
                 # If this is not the last iteration
                 new_trees = self._add_leaf(tree, self.leaves[leaf_no], threshold = self.threshold, final_iteration=False)
                 self._DFS_trees(new_trees, leaf_no + 1)

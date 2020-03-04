@@ -14,10 +14,12 @@ def main():
         print(len(seq_record))
         alignment.extend([seq_record])
 
-    """
     # Print the alignment
     print(alignment)
 
+    ####################
+    # Neighbor joining #
+    ####################
     dc = Distance_Calculator()
     dm = dc.create_distance_matrix(alignment)
     dm.data.to_csv("animals.csv")
@@ -27,18 +29,22 @@ def main():
     end = time.time()
     print("Neighbor joining run in {} seconds.".format(end - start))
     dc.draw_tree()
-    """
 
     dc = Distance_Calculator(mode="UPGMA")
     dm = dc.create_distance_matrix(alignment)
 
+    #########
+    # UPGMA #
+    #########
     start = time.time()
     dc.build_tree(dm)
     end = time.time()
     print("UPGMA run in {} seconds.".format(end - start))
     dc.draw_tree()
 
-    """
+    #########
+    # WPGMA #
+    #########
     dc = Distance_Calculator(mode="WPGMA")
     dm = dc.create_distance_matrix(alignment)
 
@@ -47,7 +53,6 @@ def main():
     end = time.time()
     print("WPGMA run in {} seconds.".format(end - start))
     dc.draw_tree()
-    """
 
 if __name__ == '__main__':
     main()
