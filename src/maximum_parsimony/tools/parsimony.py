@@ -1,17 +1,45 @@
-import numpy as np
-from Bio.Phylo import BaseTree
-from Bio.Phylo import draw
+
+from Bio.Phylo import BaseTree, draw
+from Bio.Phylo.BaseTree import Clade
 from Bio.Align import MultipleSeqAlignment
+import numpy as np
+from abc import abstractmethod
 from collections import Counter
-from tools.utils import remove_unprocessed, ParsimonyClade
-import random
+
+class ParsimonyClade(Clade):
+    """
+    Class extending Bio.Phylo.BaseTree.Clade. Stores base sets and parsimony scores.
+    """
+    
+    def __init__(
+        self,
+        branch_length=None,
+        name=None,
+        clades=None,
+        confidence=None,
+        color=None,
+        width=None,
+        sets=None,
+        score=0
+    ):
+        """
+        Constructor.
+
+        sets: list of sets containing bases (for each site in a sequence)
+        score: parsimony score belonging to this clade
+        """
+
+        super(ParsimonyClade, self).__init__(branch_length, name, clades, confidence, color, width)
+        self.sets = sets
+        self.score = score
+
 
 class Parsimony():
     """
     Class for methods using maximum parsimony.
     """
 
-    def __init__(self, alignment: MultipleSeqAlignment, bnb: bool = True):
+    def __init__(self, alignment: MultipleSeqAlignment):
         """
         Constructor.
 
@@ -38,42 +66,15 @@ class Parsimony():
 
         self.size = len(self.leaves) # Number of alignments
         self.length = alignment.get_alignment_length() # Length of each sequence
-        self.bnb = bnb # Branch and bound. If false, use exhaustive search.
-        random.shuffle(self.leaves)
-        random.shuffle(self.leaves)
 
-    def run(self, print_best = False):
+    @abstractmethod
+    def run(self, print_best: bool = False):
         """
-        Generate all possible trees and find the one with the lowest score.
+        Run the algorithm.
+
+        print_best: print best tree (optional). Default is False.
         """
-        if self.size <= 0:
-            print("There aren't enough taxon.")
-            return
-
-        # If there is only one taxon
-        if self.size == 1:
-            inner_clade = ParsimonyClade(None, None, sets=[], score=0)
-            inner_clade.clades.append(self.leaves[0])
-            self.tree = self.create_tree(inner_clade)
-            return
-            
-        # Initialize
-        trees = [self.leaves[0]]
-
-        # Depth first search
-        self._DFS_trees(trees, 1)
-        self.trees = [self.create_tree(tree) for tree in self.trees]
-        self.tree = self.create_tree(self.tree)
-        
-        # Print trees
-        for tree in self.trees:
-            print(tree)
-            print()
-
-        print(len(self.trees))
-
-        if print_best:
-            print(self.tree)
+        pass
 
     def create_tree(self, root: ParsimonyClade):
         """
@@ -85,132 +86,6 @@ class Parsimony():
         """
         return BaseTree.Tree(root, rooted=False)
 
-    def _DFS_trees(self, queue: list, leaf_no: int):
-        while queue:
-            tree = queue.pop(0)
-
-            if leaf_no < 9 - 1:
-                # If this is not the last iteration
-                new_trees = self._add_leaf(tree, self.leaves[leaf_no], threshold = self.threshold, final_iteration=False)
-                self._DFS_trees(new_trees, leaf_no + 1)
-            else:
-                # If this is the last iteration
-                new_trees = self._add_leaf(tree, self.leaves[leaf_no], threshold = self.threshold, final_iteration=True)
-                # When using extensive search, the following are all the complete trees; when using BnB, these are the all the
-                # temporarily best complete trees.
-                self.trees.extend(new_trees)
-
-    def _add_leaf(self, root: ParsimonyClade, leaf: ParsimonyClade, threshold: int = np.inf, final_iteration: bool = False):
-        """
-        Add leaf to a tree.
-
-        root: root defining the given tree
-        leaf: leaf to be added
-        threshold: the best result so far (the lower the better)
-        final_iteration: if this is the final iteration (when the last taxon needs to be added)
-
-        returns: trees after the leaf has been added in every possible combination (represented by their roots)
-        """
-
-        new_trees = []
-        min_tree = None
-
-        ####################
-        # Branch and bound #
-        ####################
-        if self.bnb:
-            # There are three different kinds of tree formation.
-
-            # No. 1.: create a new root; let the old root be the left subtree and the leaf the right one.
-            under_threshold, inner_clade = self._create_inner_node(root, leaf, threshold = threshold)
-            if under_threshold:
-                if final_iteration:
-                    threshold = inner_clade.score
-                    min_tree = inner_clade
-                new_trees.append(inner_clade)
-
-            # If the root is a leaf, return current state (it doesn't have subtrees).
-            if not root.clades:
-                if final_iteration:
-                    self.tree = min_tree
-                    self.threshold = threshold
-                return new_trees
-
-            left = root.clades[0] # Left subtree
-            right = root.clades[1] # right subtree
-
-            # No. 2.: Append the leaf to the left subtree recursively.
-            subtrees = self._add_leaf(left, leaf)
-            for subtree in subtrees:
-                under_threshold, inner_clade = self._create_inner_node(subtree, right, threshold=threshold)
-                if under_threshold:
-                    if final_iteration:
-                        threshold = inner_clade.score
-                        min_tree = inner_clade
-                    new_trees.append(inner_clade)
-
-            # No. 3.: Append the leaf to the right subtree recursively.
-            subtrees = self._add_leaf(right, leaf)
-            for subtree in subtrees:
-                under_threshold, inner_clade = self._create_inner_node(left, subtree, threshold=threshold)
-                if under_threshold:
-                    if final_iteration:
-                        threshold = inner_clade.score
-                        min_tree = inner_clade
-                    new_trees.append(inner_clade)
-
-        ####################
-        # Extensive search #
-        ####################
-        else:
-            # There are three different kinds of tree formation.
-
-            # No. 1.: create a new root; let the old root be the left subtree and the leaf the right one.
-            _, inner_clade = self._create_inner_node(root, leaf, threshold = np.inf)
-            new_trees.append(inner_clade)
-            if final_iteration and inner_clade.score < threshold:
-                threshold = inner_clade.score
-                min_tree = inner_clade
-
-            # If the root is a leaf, return current state (it doesn't have subtrees).
-            if not root.clades:
-                if final_iteration:
-                    self.tree = min_tree
-                    self.threshold = threshold
-                return new_trees
-
-            left = root.clades[0] # Left subtree
-            right = root.clades[1] # right subtree
-
-            # No. 2.: Append the leaf to the left subtree recursively.
-            subtrees = self._add_leaf(left, leaf)
-            for subtree in subtrees:
-                _, inner_clade = self._create_inner_node(subtree, right, threshold=np.inf)
-                new_trees.append(inner_clade)
-                if final_iteration and inner_clade.score < threshold:
-                    threshold = inner_clade.score
-                    min_tree = inner_clade
-
-            # No. 3.: Append the leaf to the right subtree recursively.
-            subtrees = self._add_leaf(right, leaf)
-            for subtree in subtrees:
-                _, inner_clade = self._create_inner_node(left, subtree, threshold=np.inf)
-                new_trees.append(inner_clade)
-                if final_iteration and inner_clade.score < threshold:
-                    threshold = inner_clade.score
-                    min_tree = inner_clade
-            
-
-        #####################
-        # Change parameters #
-        #####################
-        # If this is the final iteration and we have found a new best tree, change the appripriate parameters.
-        if final_iteration and min_tree is not None:
-            self.tree = min_tree
-            self.threshold = threshold
-
-        return new_trees
-
     def _create_inner_node(self, left: ParsimonyClade, right: ParsimonyClade, threshold: int, name: str = None):
         """
         Create new root with given left and right subtree, calculate the parsimony score and create the corresponding sets
@@ -218,13 +93,14 @@ class Parsimony():
 
         left: root of left subtree
         right: root of right subtree
-        threshold: the best result so far (the lower the better)
-        name: name of new node (optional)
+        threshold: the best result so far; the lower the better (optional). Default is infinity.
+        name: name of new node (optional). Default is None.
 
-        returns: whether the resulting parsimony score is under the given threshold; root of new tree (if first parameter is true)
+        returns: whether the resulting parsimony score is under the given threshold; root of new tree (if first return value is true)
         """
 
         # Calculate the initial parsimony score by adding the scores of the left and the right node
+        print(left, right)
         score = left.score + right.score
         # If this is already greater than or equal to the threshold, return
         if score >= threshold:
@@ -281,23 +157,26 @@ class Parsimony():
             score += 1
 
         return score, sets
-        
-    def get_label(self, clade):
+    
+    def get_label(self, clade: ParsimonyClade):
         """
         Prettify tree labels.
 
         clade: current clade
+
         returns: the label belonging to the current clade
         """
         if clade.name is None:
             return ""
+        if clade.name.startswith("Inner"):
+            return ""
         return clade.name.replace("_", " ")
 
-    def draw_tree(self, show_branch_labels=False):
+    def draw_tree(self, show_branch_labels: bool = False):
         """
         Draws tree.
 
-        show_branch_labels: show branch lengths; default is False
+        show_branch_labels: show branch lengths (optional); default is False
         """
         if self.tree is None:
             print("Please first build the tree.")
