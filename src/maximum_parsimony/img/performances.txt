@@ -1,0 +1,6 @@
+Number of taxa, running time (seconds), number of temporary best trees
+9 228420.7188539505 40
+8 7316.72755074501 10
+8 3062 12
+8 15462.933355093002 13
+7 1851.649983406067 5
