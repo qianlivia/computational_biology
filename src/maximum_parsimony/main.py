@@ -4,6 +4,7 @@ from Bio.Alphabet import IUPAC, Gapped
 from tools.parsimony_exact import ParsimonyExact
 from tools.parsimony_heuristics import ParsimonyHeuristics
 import time
+import numpy as np
 
 def main():
     file_name = "data/coding.fa"
@@ -12,14 +13,14 @@ def main():
     for seq_record in SeqIO.parse(file_name, "fasta"):
         alignment.extend([seq_record])
 
-    """
     par = ParsimonyExact(alignment[:4], bnb=True)
     start = time.time()
-    par.run()
+    par.run(print_best=True)
     end = time.time()
     print("Maximum parsimony (exact) run in {} seconds.".format(end - start))
     par.draw_tree()
-    """
+    
+    print("------------------------------------------------------------------")
 
     par = ParsimonyHeuristics(alignment[:4], seed=0)
     start = time.time()

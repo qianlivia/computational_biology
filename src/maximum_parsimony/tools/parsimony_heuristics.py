@@ -1,6 +1,7 @@
 import numpy as np
 from Bio.Align import MultipleSeqAlignment
 from tools.parsimony import Parsimony, ParsimonyClade
+import random
 
 class ParsimonyHeuristics(Parsimony):
     """
@@ -13,12 +14,13 @@ class ParsimonyHeuristics(Parsimony):
 
         alignment: MultipleSeqAlignment containing the alignment
         """
+
         super(ParsimonyHeuristics, self).__init__(alignment)
-        np.random.seed(seed) # Set seed
+        random.seed(seed) # Set seed
         self.limit = limit # Maximum number of trees to investigate
         self.parents = {} # Dictionary for storing the parents of nodes
         self.inner_nodes = set() # Set of inner nodes
-        self.inner_nodes_wo_root = set() # Set of inner nodes without the root
+        self.inner_nodes_wo_root = [] # Inner nodes without the root
 
     def run(self, print_best: bool = False):
         """
@@ -30,7 +32,7 @@ class ParsimonyHeuristics(Parsimony):
         super(ParsimonyHeuristics, self).run()
         
         if self.size <= 0:
-            print("There aren't enough taxon.")
+            print("There aren't enough taxa.")
             return
 
         # Return if there is only one taxon
@@ -49,22 +51,20 @@ class ParsimonyHeuristics(Parsimony):
             return
 
         # Run SPR
-        # self._SPR()
+        self._SPR()
         self.tree = self.create_tree(self.tree)
         
         # Print tree
         if print_best:
             print(self.tree)
 
-        print(self.inner_nodes)
-        print()
-        print(self.inner_nodes_wo_root)
-        print()
-        print(self.parents)
-
     def _generate_initial_tree(self):
+        """
+        Generate initial tree.
+        """
+
         leaves = self.leaves
-        np.random.shuffle(leaves)
+        random.shuffle(leaves)
         root = leaves[0]
         for i in range(1, self.size):
             # Create new inner node
@@ -76,12 +76,12 @@ class ParsimonyHeuristics(Parsimony):
 
             # Store inner node
             self.inner_nodes.add(inner_node)
-            self.inner_nodes_wo_root.add(inner_node)
+            self.inner_nodes_wo_root.append(inner_node)
 
             root = inner_node
 
-        # Remove root from the set of inner nodes (last element)
-        self.inner_nodes_wo_root.discard(root)
+        # Remove root from the list of inner nodes (last element)
+        del self.inner_nodes_wo_root[-1]
         
         self.tree = root
 
@@ -98,15 +98,18 @@ class ParsimonyHeuristics(Parsimony):
         chosen_child: will be the new child of variable "parent", along with the subtree that we pruned and regrafted
 
         """
-        # TODO: implement exit condition dependent on change in parsimony score
+        
         if self.limit == np.inf:
-            self.limit = 100
+            self.limit = self.size * 50
+
+        min_tree = self.tree
+        min_score = self.tree.score
 
         iter = 0
         while iter < self.limit:
             # Choose a random edge that's not connected to the root; first pick a random inner node, then pick one of its children.
-            parent = np.random.choice(self.inner_nodes_wo_root)
-            child_ind = np.random.choice([0, 1])
+            parent = random.choice(self.inner_nodes_wo_root)
+            child_ind = random.choice([0, 1])
             child = parent.clades[child_ind]
 
             # Take this edge out and rewire accordingly.
@@ -139,7 +142,7 @@ class ParsimonyHeuristics(Parsimony):
 
             # Then choose from the remainder.
             nodes_to_choose_from = self.inner_nodes - used_nodes
-            chosen_parent = np.random.choice(nodes_to_choose_from)
+            chosen_parent = random.choice(list(nodes_to_choose_from))
 
             # If this is the parent of the original edge, choose the other edge belonging to this node:
             if chosen_parent == new_parent:
@@ -148,8 +151,9 @@ class ParsimonyHeuristics(Parsimony):
                 else:
                     chosen_child_ind = 0
             else:
-                chosen_child = np.random.choice([0, 1])
-                chosen_child = chosen_parent.clades[chosen_child_ind]
+                chosen_child_ind = random.choice([0, 1])
+
+            chosen_child = chosen_parent.clades[chosen_child_ind]
 
             # Insert subtree.
             chosen_parent.clades[chosen_child_ind] = parent
@@ -163,7 +167,13 @@ class ParsimonyHeuristics(Parsimony):
             # Calculate new parsimony score.
             self._recalculate_score(new_parent, parent, self.tree)
 
+            if min_score >= self.tree.score:
+                min_score = self.tree.score
+                min_tree = self.tree.copy()
+
             iter += 1
+
+        self.tree = min_tree
 
     def _recalculate_score(self, first_node: ParsimonyClade, second_node: ParsimonyClade, root: ParsimonyClade):
         """
@@ -180,7 +190,7 @@ class ParsimonyHeuristics(Parsimony):
 
         # Create first path
         first_path = [first_node]
-        curr = new_parent
+        curr = first_node
         while curr != root:
             curr = self.parents[curr]
             first_path.append(curr)
@@ -224,9 +234,9 @@ class ParsimonyHeuristics(Parsimony):
         for elem in lst:
             # Initialize variables
             sets = []
-            score = 0
             left = elem.clades[0]
             right = elem.clades[1]
+            score = left.score + right.score
             
             # Count parsimony score for every site (self.length elements)
             for u in range(self.length):

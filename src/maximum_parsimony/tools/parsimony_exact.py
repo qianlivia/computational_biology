@@ -27,7 +27,7 @@ class ParsimonyExact(Parsimony):
         super(ParsimonyExact, self).run()
 
         if self.size <= 0:
-            print("There aren't enough taxon.")
+            print("There aren't enough taxa.")
             return
 
         # If there is only one taxon
@@ -46,11 +46,13 @@ class ParsimonyExact(Parsimony):
         self.tree = self.create_tree(self.tree)
         
         # Print trees
+        """
         for tree in self.trees:
             print(tree)
             print()
+        """
 
-        print(len(self.trees))
+        print("Number of trees considered as local maxima:", len(self.trees))
 
         if print_best:
             print(self.tree)

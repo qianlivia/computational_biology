@@ -28,10 +28,21 @@ class ParsimonyClade(Clade):
         sets: list of sets containing bases (for each site in a sequence)
         score: parsimony score belonging to this clade
         """
-
+        
         super(ParsimonyClade, self).__init__(branch_length, name, clades, confidence, color, width)
         self.sets = sets
         self.score = score
+
+    def copy(self):
+        """
+        Copy current instance.
+
+        returns: new instance
+        """
+
+        obj = type(self).__new__(self.__class__)
+        obj.__dict__.update(self.__dict__)
+        return obj
 
 
 class Parsimony():
@@ -100,7 +111,6 @@ class Parsimony():
         """
 
         # Calculate the initial parsimony score by adding the scores of the left and the right node
-        print(left, right)
         score = left.score + right.score
         # If this is already greater than or equal to the threshold, return
         if score >= threshold:
