@@ -16,7 +16,7 @@ class Base(Enum):
     T = 3
 
 
-class SOTClade(Clade):
+class SOTAClade(Clade):
     """
     Class extending Bio.Phylo.BaseTree.Clade. Stores base sets and parsimony scores.
     """
@@ -28,8 +28,9 @@ class SOTClade(Clade):
         clades=None,
         confidence=None,
         color=None,
-        height=1,
-        width=1
+        width=None,
+        rows=1,
+        columns=1
     ):
         """
         Constructor.
@@ -38,10 +39,19 @@ class SOTClade(Clade):
         width: width of weight matrix
         """
         
-        super(SOTClade, self).__init__(branch_length, name, clades, confidence, color, width)
+        super(SOTAClade, self).__init__(branch_length, name, clades, confidence, color, width)
         
         # weight: weight belonging to the current cell
-        self.weight = np.random.uniform(0, 1, (height, width))
+        self.weights = np.random.uniform(0, 1, (rows, columns))
+
+    def set_weight(self, weights: np.ndarray):
+        """
+        Setter for weight matrix.
+
+        weight: item to set
+        """
+
+        self.weights = weights
 
     def copy(self):
         """
@@ -61,6 +71,7 @@ class SOTA():
     and on the growing cell structures algorithm of Fritzke.
     Based on a publication by J. Dopazo (1997), doi: 10.1007/PL00006139.
     """
+    # TODO add seed
 
     def __init__(self, alignment: MultipleSeqAlignment):
         """
@@ -80,24 +91,22 @@ class SOTA():
 
         # If there is only one taxon
         if self.size == 1:
-            inner_clade = Clade(None, None)
-            first_cell = Clade(None, alignment[0].id)
+            inner_clade = SOTAClade(None, None)
+            first_cell = SOTAClade(None, alignment[0].id)
             inner_clade.clades.append(first_cell)
             self.tree = self.create_tree(inner_clade)
 
         # If there are only 2 taxa
         elif self.size == 2:
-            inner_clade = Clade(None, None)
-            first_cell = Clade(None, alignment[0].id)
-            second_cell = Clade(None, alignment[1].id)
+            inner_clade = SOTAClade(None, None)
+            first_cell = SOTAClade(None, alignment[0].id)
+            second_cell = SOTAClade(None, alignment[1].id)
             inner_clade.clades.append(first_cell)
             inner_clade.clades.append(second_cell)
             self.tree = self.create_tree(inner_clade)
 
         # In any other case
         else:
-            self.reset()
-
             # Sequences to classify. Dimension: number of taxa, number of different bases + 1, length of sequences
             self.S = np.zeros((self.size, self.nr_of_bases, self.length))
             self.names = [] # Names of animal species belonging to the sequences.
@@ -119,14 +128,14 @@ class SOTA():
         """
         Reset variables.
         """
-
         # Initialize tree with 2 nodes. To be continuously updated.
-        inner_clade = Clade(None, None)
-        first_cell = SOTClade(None, None, height=self.nr_of_bases, width=self.length)
-        second_cell = SOTClade(None, None, height=self.nr_of_bases, width=self.length)
+        inner_clade = SOTAClade(None, "Node0", rows=self.nr_of_bases, columns=self.length)
+        first_cell = SOTAClade(None, "Node1", rows=self.nr_of_bases, columns=self.length)
+        second_cell = SOTAClade(None, "Node2", rows=self.nr_of_bases, columns=self.length)
         inner_clade.clades.append(first_cell)
         inner_clade.clades.append(second_cell)
-        self.tree = inner_clade
+        self.tree = self.create_tree(inner_clade)
+        self.nr_of_nodes = 3
 
         # Cells in order of creation (deletion included).
         # Dimension of weights belonging to cells: number of different bases + 1, length of sequences
@@ -140,7 +149,7 @@ class SOTA():
         # Subject to continuous update.
         self.mapping = {}
 
-    def train(self, epochs: int = 20, eta: float = 0.1, alpha: list = [0.5, 0.5, 0.5], b = 0):
+    def train(self, epochs: int = 20, eta: float = 0.5, alpha: list = [0.5, 0.02, 0.01], b = 0):
         """
         The algorithm.
 
@@ -153,76 +162,88 @@ class SOTA():
         self.alpha = alpha
         self.b = b
 
-        # There's more than one solution if there are more than 2 taxa.
-        if self.size > 2:
+        # There's only one solution when the number of taxa is smaller than 3.
+        if self.size <= 2:
+            return
             
-            # Reset variables.
-            self.reset()
+        # Reset variables.
+        self.reset()
 
-            # Grow until the tree is complete (until it has number of leaves sequal to self.size).
+        # Grow until the tree is complete (until it has number of leaves sequal to self.size).
+        for i in range(self.size - 2):
+
+            # Step 1: Adaptation for a number of epochs.
+            self._adaptation()
+
+            # Step 2: Growing the network.
+            self._growing()
+
+        self._adaptation()
+
+        # Finalize tree by assigning labels.
+        for i in range(self.size):
+            cell = self.mapping[i]
+            cell.name = self.names[i]
+
+    def _adaptation(self):
+        """
+        Adaptation process.
+        """
+
+        for iters in range(self.epochs):
             for i in range(self.size):
+                # Fetch corresponding sequence.
+                s = self.S[i] # 2D matrix - weight belonging to sequence i
 
-                # Step 1: Adaptation for a number of epochs.
-                iters = 0
-                while iters < epochs:
-                    for i in range(self.size):
-                        # Fetch corresponding sequence.
-                        s = self.S[i] # 2D matrix - weight belonging to sequence i
+                # Min search: find the closest cell
+                cell = self._find_most_similar_cell(s)
+                self.mapping[i] = cell
+                
+                # Weight update
+                self._weight_update(s, cell.weights, self.alpha[0])
 
-                        # Min search: find the closest cell
-                        cell = self._find_most_similar_cell(s)
-                        self.mapping[i] = cell
-                        
-                        # Weight update
-                        self._weight_update(s, cell.weight, self.alpha[0])
+                # Find the index of neighbor(s): a cell is considered a neighbor if they have a mutual parent. If the current
+                # cell (leaf) doesn not have a sister that's also a cell, only itself gets updated.
+                parent = self.parents[cell]
 
-                        # Find the index of neighbor(s): a cell is considered a neighbor if they have a mutual parent. If the current
-                        # cell (leaf) doesn not have a sister that's also a cell, only itself gets updated.
-                        parent = self.parents[cell]
+                if parent.clades[0] == cell:
+                    sister = parent.clades[1]
+                else:
+                    sister = parent.clades[0]
 
-                        if parent.clades[0] == cell:
-                            sister = parent.clades[1]
-                        else:
-                            sister = parent.clades[0]
+                # If sister is a cell, update (along with the mutual parent)
+                if sister.clades:
+                    self._weight_update(s, parent.weights, self.alpha[1])
+                    self._weight_update(s, sister.weights, self.alpha[2])
 
-                        # If sister is a cell, update (along with the mutual parent)
-                        if sister.clades:
-                            self._weight_update(s, parent.weight, self.alpha[1])
-                            self._weight_update(s, sister.weight, self.alpha[2])
+    def _growing(self):
+        """
+        Growing of the network.
+        """
 
-                    # To the next iteration
-                    iters += 1
+        # Find the cell that got associated with the highest number of sequences.
+        cell, _ = Counter(self.mapping.values()).most_common(1)[0]
 
-                # Step 2: Growing the network.
-                # Find the cell that got associated with the highest number of sequences.
-                cell, _ = Counter(self.mapping.values()).most_common(1)[0]
+        # Create children.
+        first_child = SOTAClade(None, "Node{}".format(self.nr_of_nodes))
+        self.nr_of_nodes += 1
+        second_child = SOTAClade(None, "Node{}".format(self.nr_of_nodes))
+        self.nr_of_nodes += 1
+        first_child.set_weight(cell.weights.copy())
+        second_child.set_weight(cell.weights.copy())
 
-                # Create children.
-                first_child = SOTClade(None, None)
-                second_child = SOTClade(None, None)
-                first_child.weight = cell.weight
-                first_child.weight = cell.weight
+        # Create relations.
+        self.parents[first_child] = cell
+        self.parents[second_child] = cell
+        cell.clades.append(first_child)
+        cell.clades.append(second_child)
 
-                # Create relations.
-                self.parents[first_child] = cell
-                self.parents[second_child] = cell
-                cell.clades.append(first_child)
-                cell.clades.append(second_child)
+        # Remove the current node from the list of cells.
+        self.C.remove(cell)
 
-                # Remove the current node from the list of cells.
-                self.C.remove(cell)
-
-                # Add new elements to the list.
-                self.C.append(first_child)
-                self.C.append(second_child)
-
-            # Finalize tree by assigning labels.
-
-            for i in range(self.size):
-                cell = self.mapping[i]
-                cell.name = self.names[i]
-
-            self.tree = self.create_tree(self.tree)
+        # Add new elements to the list.
+        self.C.append(first_child)
+        self.C.append(second_child)
 
     def _find_most_similar_cell(self, s: np.ndarray):
         """
@@ -235,7 +256,7 @@ class SOTA():
         min_val = np.inf
         min_cell = None
         for cell in self.C:
-            sim = self._similarity(s, cell.weight)
+            sim = self._similarity(s, cell.weights)
             if sim <= min_val:
                 min_val = sim
                 min_cell = cell
@@ -253,7 +274,7 @@ class SOTA():
         d = 0
 
         for l in range(self.length):
-
+            
             temp = 0
             for r in range(self.nr_of_bases):
                 temp += s[r][l] * c[r][l]
@@ -279,6 +300,30 @@ class SOTA():
         M = self.eta * self.nr_of_bases * self.length
         Eta = alpha * ((1 - t) / M) * (1 - self.b * tau)
         s += Eta * (s - c)
+
+    def create_tree(self, root: Clade):
+        """
+        Create tree with given root.
+
+        root: root
+
+        returns: tree
+        """
+        return BaseTree.Tree(root, rooted=False)
+
+    def get_label(self, clade: SOTAClade):
+        """
+        Prettify tree labels.
+
+        clade: current clade
+
+        returns: the label belonging to the current clade
+        """
+        if clade.name is None:
+            return ""
+        if clade.name.startswith("Inner"):
+            return ""
+        return clade.name.replace("_", " ")
 
     def draw_tree(self, show_branch_labels: bool = False):
         """

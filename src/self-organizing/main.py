@@ -13,7 +13,7 @@ def main():
     for seq_record in SeqIO.parse(file_name, "fasta"):
         alignment.extend([seq_record])
 
-    par = SOTA(alignment[:4])
+    par = SOTA(alignment[10:13])
     start = time.time()
     par.train()
     end = time.time()
