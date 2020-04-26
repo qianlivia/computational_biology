@@ -1,0 +1,6 @@
+15: Self-organizing tree network run in 1935.6333451271057 seconds.
+40: Self-organizing tree network run in 36669.36223721504 seconds.
+4: Self-organizing tree network run in 47.781091928482056 seconds.
+4: Self-organizing tree network run in 55.17722153663635 seconds.
+5: Self-organizing tree network run in 98.02581882476807 seconds.
+5: Self-organizing tree network run in 89.6685688495636 seconds.

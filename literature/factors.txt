@@ -1,0 +1,17 @@
+http://profs.sci.univr.it/~liptak/ALBioinfo/files/PhylogenetikSkript2009.pdf
+
+There is an old discussion about which method for reconstructing phylogenetic trees is the best one. Without going too much into the details, here is a list of possible criteria to compare the different methods:
+• Consistency: The tendency of the method to converge on the correct answer as more data (characters) are added.
+• Efficiency (or power): the ability of the method to recover the correct answer with limited amounts of data.
+• Robustness: A method is robust if it is relatively insensitive to violations of its assumptions.
+• Computational speed: The length of time a method takes to solve a problem.
+• Versatility: What kind of information can be incorporated into the analysis?
+In the following we want to focus on consistency, which has received much attention, although it also has its weaknesses. Our discussion of consistency is based on [37] and [1, Chapter 12].
+
+
+Definition: A method is consistent if it converges on the correct tree when given infinite data.
+All methods are consistent when their assumptions are met, and all methods are inconsistent if their assumptions are sufficiently violated. Therefore, one has to specify the conditions under which a method is consistent.
+For example, most distance-based methods (except UPGMA) are consistent under the JukesCantor model. Maximum parsimony can be made consistent by using a Hadamard transformation [38] to correct the data. Maximum likelihood is consistent by definition.
+The notion of consistency is not necessarily useful to assess the practical value of a method: A method can be consistent, but very inefficient (like Lake’s method of invariants [39, 40]) which means that in practice one will never be able to collect enough data to get a good result
+with high likelihood.
+To test the accuracy of a method in practice, one can apply the method to real (experimentally verified) or numerical (simulated) data. Experimental studies are expensive and time consuming. Simulations are cheap and fast, but might be problematic (model realism, simulation bias).

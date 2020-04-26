@@ -70,20 +70,30 @@ class SOTA():
     Self-Organizing Tree Algorithm. The algorithm presented here is based both on the Kohonen self-organizing maps
     and on the growing cell structures algorithm of Fritzke.
     Based on a publication by J. Dopazo (1997), doi: 10.1007/PL00006139.
-    """
-    # TODO add seed
 
-    def __init__(self, alignment: MultipleSeqAlignment):
+    Cycle: the series of operations performed until a cell generates two descendants.
+    Presentation: implies two steps:
+        first, to find the best matching cell (winning cell) for each input sequence i and
+        second, to update this cell and its neighborhood.
+
+    """
+
+    def __init__(self, alignment: MultipleSeqAlignment, seed: int = 0):
         """
         Constructor.
         
         alignment: MultipleSeqAlignment containing the alignment
         """
 
+        self.seed = seed
+        np.random.seed(seed)
+
         self.size = len(alignment) # Number of alignments
         self.length = alignment.get_alignment_length() # Length of each sequence
         self.nr_of_bases = len(Base) + 1
         self.alignment = alignment
+        self.threshold = 10e-5
+        self.E = 10e-5
 
         # If the number of sequences isn't enough
         if self.size <= 0:
@@ -120,36 +130,34 @@ class SOTA():
                     char = sequence.seq[j]
                     try:
                         base = Base[char]
-                        self.S[i][base.value][j] = 1
+                        self.S[i][base.value, j] = 1
                     except KeyError:
-                        self.S[i][self.nr_of_bases - 1][j] = 1
+                        self.S[i][self.nr_of_bases - 1, j] = 1
 
     def reset(self):
         """
         Reset variables.
         """
-        # Initialize tree with 2 nodes. To be continuously updated.
+        # Initialize tree with 1 node. To be continuously updated.
         inner_clade = SOTAClade(None, "Node0", rows=self.nr_of_bases, columns=self.length)
-        first_cell = SOTAClade(None, "Node1", rows=self.nr_of_bases, columns=self.length)
-        second_cell = SOTAClade(None, "Node2", rows=self.nr_of_bases, columns=self.length)
-        inner_clade.clades.append(first_cell)
-        inner_clade.clades.append(second_cell)
         self.tree = self.create_tree(inner_clade)
-        self.nr_of_nodes = 3
+        self.nr_of_nodes = 1
 
         # Cells in order of creation (deletion included).
         # Dimension of weights belonging to cells: number of different bases + 1, length of sequences
-        self.C = [first_cell, second_cell]
+        self.C = [inner_clade]
 
         self.parents = {} # Dictionary for storing the parents of nodes and cells
-        self.parents[first_cell] = inner_clade # Store the first parent-child relationship
-        self.parents[second_cell] = inner_clade
 
         # Mapping telling which cell each sequence belongs to (element in position i should be assigned to cell mapping[i]).
         # Subject to continuous update.
         self.mapping = {}
 
-    def train(self, epochs: int = 20, eta: float = 0.5, alpha: list = [0.5, 0.02, 0.01], b = 0):
+        # Mapping telling which sequence belongs to a given cell.
+        self.mapping_inv = {}
+        self.mapping_inv[inner_clade] = []
+
+    def train(self, epochs: int = 50, eta: float = 0.5, alpha: list = [0.5, 0.02, 0.01], b = 0):
         """
         The algorithm.
 
@@ -169,16 +177,30 @@ class SOTA():
         # Reset variables.
         self.reset()
 
-        # Grow until the tree is complete (until it has number of leaves sequal to self.size).
-        for i in range(self.size - 2):
+        # Grow until the tree is complete (until the resource threshold is reached).
+        
+        # Step 1: Adaptation.
+        self._adaptation()
+        _, res = self._find_highest_resource()
+        
+        print("Resource", res)
 
-            # Step 1: Adaptation for a number of epochs.
-            self._adaptation()
+        it = 1
+        while res > self.threshold:
+            # Note: each iteration is a cycle.
+            print("Iter", it)
 
             # Step 2: Growing the network.
             self._growing()
 
-        self._adaptation()
+            # Step 3: Adaptation after growing.
+            self._adaptation()
+            
+            # Find the cell with the highest resource value.
+            _, res = self._find_highest_resource()
+            print(res)
+
+            it += 1
 
         # Finalize tree by assigning labels.
         for i in range(self.size):
@@ -190,39 +212,71 @@ class SOTA():
         Adaptation process.
         """
 
+        # Number of epochs dependent on error
+
         for iters in range(self.epochs):
+            print("Iters", iters)
+            
             for i in range(self.size):
+                # Note: each iteration of this loop is considered a presentation.
+
                 # Fetch corresponding sequence.
                 s = self.S[i] # 2D matrix - weight belonging to sequence i
 
                 # Min search: find the closest cell
                 cell = self._find_most_similar_cell(s)
+                
+                # Delete old mapping (if exists)
+                try:
+                    old_cell = self.mapping[i]
+                    self.mapping_inv[old_cell].remove(i)
+                except KeyError:
+                    pass
+
+                # Create new mapping between the sequence and the cell
                 self.mapping[i] = cell
+                self.mapping_inv[cell].append(i)
                 
                 # Weight update
                 self._weight_update(s, cell.weights, self.alpha[0])
 
                 # Find the index of neighbor(s): a cell is considered a neighbor if they have a mutual parent. If the current
-                # cell (leaf) doesn not have a sister that's also a cell, only itself gets updated.
-                parent = self.parents[cell]
+                # cell (leaf) does not have a sister that's also a cell, only it itself gets updated.
 
-                if parent.clades[0] == cell:
-                    sister = parent.clades[1]
-                else:
-                    sister = parent.clades[0]
+                try:
+                    parent = self.parents[cell]
 
-                # If sister is a cell, update (along with the mutual parent)
-                if sister.clades:
-                    self._weight_update(s, parent.weights, self.alpha[1])
-                    self._weight_update(s, sister.weights, self.alpha[2])
+                    if parent.clades[0] == cell:
+                        sister = parent.clades[1]
+                    else:
+                        sister = parent.clades[0]
+
+                    # If sister is a cell, update (along with the mutual parent)
+                    if sister.clades:
+                        self._weight_update(s, parent.weights, self.alpha[1])
+                        self._weight_update(s, sister.weights, self.alpha[2])
+
+                # Ignore if the cell is root.
+                except KeyError:
+                    pass
+
+            if iters == 0:
+                prev_err = self.get_error()
+            else:
+                new_err = self.get_error()
+                relative_inc = np.abs((new_err - prev_err) / prev_err)
+                print("Relative increase in error", relative_inc, "error", new_err)
+                if relative_inc < self.E or new_err < self.threshold:
+                    break
+                prev_err = new_err
 
     def _growing(self):
         """
         Growing of the network.
         """
 
-        # Find the cell that got associated with the highest number of sequences.
-        cell, _ = Counter(self.mapping.values()).most_common(1)[0]
+        # Find the cell with the highest resource value.
+        cell, res = self._find_highest_resource()
 
         # Create children.
         first_child = SOTAClade(None, "Node{}".format(self.nr_of_nodes))
@@ -240,10 +294,30 @@ class SOTA():
 
         # Remove the current node from the list of cells.
         self.C.remove(cell)
+        del self.mapping_inv[cell]
 
         # Add new elements to the list.
         self.C.append(first_child)
+        self.mapping_inv[first_child] = []
         self.C.append(second_child)
+        self.mapping_inv[second_child] = []
+
+    def _find_highest_resource(self):
+        """
+        Find the cell with the highest resource value.
+        """
+        
+        cell = self.C[0]
+        res = self._get_resource(cell)
+
+        for i in range(1, len(self.C)):
+            c = self.C[i]
+            r = self._get_resource(c)
+            if r > res:
+                res = r
+                cell = c
+
+        return cell, res
 
     def _find_most_similar_cell(self, s: np.ndarray):
         """
@@ -270,20 +344,27 @@ class SOTA():
         c: cell
         returns: distance
         """
+        
+        d = np.sum([1 - np.dot(s[:, l], c[:, l]) for l in range(self.length)])
+        return d / self.length
 
-        d = 0
+    def _get_resource(self, cell: SOTAClade):
+        """
+        Get resurce value of cell.
 
-        for l in range(self.length):
-            
-            temp = 0
-            for r in range(self.nr_of_bases):
-                temp += s[r][l] * c[r][l]
+        c: cell
+        """
 
-            d += 1 - temp
-
-        d = d / self.length
-
-        return d
+        count = 0
+        summ = 0
+        sequences = self.mapping_inv[cell]
+        for seq in sequences:
+            summ += self._similarity(self.S[seq], cell.weights)
+            count += 1
+        
+        if count == 0:
+            return 0
+        return summ / count
 
     def _weight_update(self, s: np.ndarray, c: np.ndarray, alpha: float):
         """
@@ -294,12 +375,26 @@ class SOTA():
         a: constant update rate depending on the role (winning cell, ancestor or sister cell)
         """
 
-        t = self.size * self.epochs
-        tau = self.epochs
+        # t = self.size * self.epochs * self.size
+        # tau = self.epochs * self.size
 
-        M = self.eta * self.nr_of_bases * self.length
-        Eta = alpha * ((1 - t) / M) * (1 - self.b * tau)
-        s += Eta * (s - c)
+        # M = self.eta * self.nr_of_bases * self.length
+        # Eta = alpha * ((1 - t) / M) * (1 - self.b * tau)
+        # Eta = alpha * ((1 - t) / M)
+
+        Eta = alpha * self.eta
+        c += Eta * (s - c)
+
+    def get_error(self):
+        """
+        Get total error.
+        """
+
+        summ = 0
+        for seq, cell in self.mapping.items():
+            summ += self._similarity(self.S[seq], cell.weights)
+
+        return summ
 
     def create_tree(self, root: Clade):
         """
@@ -321,7 +416,7 @@ class SOTA():
         """
         if clade.name is None:
             return ""
-        if clade.name.startswith("Inner"):
+        if clade.name.startswith("Node"):
             return ""
         return clade.name.replace("_", " ")
 
