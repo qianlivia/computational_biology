@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.9.2)  27 APR 2020 11:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.9.2)  29 APR 2020 01:16
 entering extended mode
 **./report.tex
 (report.tex
@@ -289,24 +289,38 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box32
 \@float@everytoks=\toks26
 \@floatcapt=\box33
-) ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/natbib\bibentry.sty
+)
+("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/underscore\underscore
+.sty"
+Package: underscore 2006/09/13
+LaTeX Info: Redefining \_ on input line 42.
+)
+("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/etoolbox\etoolbox.sty
 "
-Package: bibentry 2007/10/30 1.5 (PWD)
-) (report.aux)
+Package: etoolbox 2018/08/19 v2.5f e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count123
+) ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xurl\xurl.sty"
+Package: xurl 2020/01/24 v 0.09 modify URL breaks
+
+("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/url\url.sty"
+\Urlmuskip=\muskip11
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+))
+(report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 39.
+LaTeX Font Info:    ... okay on input line 39.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -316,22 +330,22 @@ LaTeX Font Info:    ... okay on input line 28.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(92.14519pt, 430.00462pt, 92.14519pt)
-* v-part:(T,H,B)=(95.39737pt, 556.47656pt, 143.09605pt)
+* h-part:(L,W,R)=(71.13188pt, 472.03123pt, 71.13188pt)
+* v-part:(T,H,B)=(85.35826pt, 624.25346pt, 85.35826pt)
 * \paperwidth=614.295pt
 * \paperheight=794.96999pt
-* \textwidth=430.00462pt
-* \textheight=556.47656pt
-* \oddsidemargin=19.8752pt
-* \evensidemargin=19.8752pt
-* \topmargin=-13.87262pt
+* \textwidth=472.03123pt
+* \textheight=624.25346pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-23.91173pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=11.0pt
 * \footskip=30.0pt
 * \marginparwidth=4.0pt
 * \marginparsep=10.0pt
-* \columnsep=10.0pt
+* \columnsep=21.33955pt
 * \skip\footins=10.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
@@ -346,16 +360,16 @@ LaTeX Font Info:    ... okay on input line 28.
 ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii\supp-pdf.
 mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count123
+\scratchcounter=\count124
 \scratchdimen=\dimen148
 \scratchbox=\box34
-\nofMPsegments=\count124
-\nofMParguments=\count125
+\nofMPsegments=\count125
+\nofMParguments=\count126
 \everyMPshowfont=\toks27
-\MPscratchCnt=\count126
+\MPscratchCnt=\count127
 \MPscratchDim=\dimen149
-\MPnumerator=\count127
-\makeMPintoPDFobject=\count128
+\MPnumerator=\count128
+\makeMPintoPDFobject=\count129
 \everyMPtoPDFconversion=\toks28
 )
 ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\epstopdf-bas
@@ -410,41 +424,49 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-\c@lstlisting=\count129
+\c@lstlisting=\count130
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+msa on input line 30.
+LaTeX Font Info:    Try loading font information for U+msa on input line 42.
 
 ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 30.
+LaTeX Font Info:    Try loading font information for U+msb on input line 42.
 
 ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-(report.bbl) [1{C:/Users/HP/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
+[1{C:/Users/HP/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
+] [2]
+(report.bbl
+Underfull \vbox (badness 2538) has occurred while \output is active []
+
+ [3])
+[4
 
 ] (report.aux) ) 
 Here is how much of TeX's memory you used:
- 6920 strings out of 492895
- 103978 string characters out of 3125137
- 321437 words of memory out of 3000000
- 10727 multiletter control sequences out of 15000+200000
- 9489 words of font info for 36 fonts, out of 3000000 for 9000
+ 7363 strings out of 492895
+ 109744 string characters out of 3125137
+ 327436 words of memory out of 3000000
+ 11156 multiletter control sequences out of 15000+200000
+ 11558 words of font info for 44 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,8n,40p,282b,224s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,8n,40p,1113b,247s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
 ic/amsfonts/cm/cmbx12.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/
 type1/public/amsfonts/cm/cmr10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2
 .9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/HP/AppData/Local/Programs
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on report.pdf (1 page, 47938 bytes).
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/HP/AppData/Local
+/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/HP/App
+Data/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on report.pdf (4 pages, 108362 bytes).
 PDF statistics:
- 22 PDF objects out of 1000 (max. 8388607)
+ 39 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

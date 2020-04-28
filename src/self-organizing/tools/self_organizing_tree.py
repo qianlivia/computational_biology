@@ -72,10 +72,9 @@ class SOTA():
     Based on a publication by J. Dopazo (1997), doi: 10.1007/PL00006139.
 
     Cycle: the series of operations performed until a cell generates two descendants.
-    Presentation: implies two steps:
+    Presentation implies two steps:
         first, to find the best matching cell (winning cell) for each input sequence i and
         second, to update this cell and its neighborhood.
-
     """
 
     def __init__(self, alignment: MultipleSeqAlignment, seed: int = 0):
@@ -138,6 +137,7 @@ class SOTA():
         """
         Reset variables.
         """
+
         # Initialize tree with 1 node. To be continuously updated.
         inner_clade = SOTAClade(None, "Node0", rows=self.nr_of_bases, columns=self.length)
         self.tree = self.create_tree(inner_clade)
@@ -147,7 +147,8 @@ class SOTA():
         # Dimension of weights belonging to cells: number of different bases + 1, length of sequences
         self.C = [inner_clade]
 
-        self.parents = {} # Dictionary for storing the parents of nodes and cells
+        # Dictionary for storing the parents of nodes and cells.
+        self.parents = {}
 
         # Mapping telling which cell each sequence belongs to (element in position i should be assigned to cell mapping[i]).
         # Subject to continuous update.
@@ -182,13 +183,10 @@ class SOTA():
         # Step 1: Adaptation.
         self._adaptation()
         _, res = self._find_highest_resource()
-        
-        print("Resource", res)
 
         it = 1
         while res > self.threshold:
             # Note: each iteration is a cycle.
-            print("Iter", it)
 
             # Step 2: Growing the network.
             self._growing()
@@ -198,7 +196,6 @@ class SOTA():
             
             # Find the cell with the highest resource value.
             _, res = self._find_highest_resource()
-            print(res)
 
             it += 1
 
@@ -215,7 +212,6 @@ class SOTA():
         # Number of epochs dependent on error
 
         for iters in range(self.epochs):
-            print("Iters", iters)
             
             for i in range(self.size):
                 # Note: each iteration of this loop is considered a presentation.
@@ -265,7 +261,6 @@ class SOTA():
             else:
                 new_err = self.get_error()
                 relative_inc = np.abs((new_err - prev_err) / prev_err)
-                print("Relative increase in error", relative_inc, "error", new_err)
                 if relative_inc < self.E or new_err < self.threshold:
                     break
                 prev_err = new_err
@@ -353,6 +348,7 @@ class SOTA():
         Get resurce value of cell.
 
         c: cell
+        returns: resource value
         """
 
         count = 0
@@ -375,19 +371,14 @@ class SOTA():
         a: constant update rate depending on the role (winning cell, ancestor or sister cell)
         """
 
-        # t = self.size * self.epochs * self.size
-        # tau = self.epochs * self.size
-
-        # M = self.eta * self.nr_of_bases * self.length
-        # Eta = alpha * ((1 - t) / M) * (1 - self.b * tau)
-        # Eta = alpha * ((1 - t) / M)
-
         Eta = alpha * self.eta
         c += Eta * (s - c)
 
     def get_error(self):
         """
         Get total error.
+
+        returns: total error
         """
 
         summ = 0
@@ -404,6 +395,7 @@ class SOTA():
 
         returns: tree
         """
+
         return BaseTree.Tree(root, rooted=False)
 
     def get_label(self, clade: SOTAClade):
@@ -414,6 +406,7 @@ class SOTA():
 
         returns: the label belonging to the current clade
         """
+
         if clade.name is None:
             return ""
         if clade.name.startswith("Node"):
@@ -426,6 +419,7 @@ class SOTA():
 
         show_branch_labels: show branch lengths (optional); default is False
         """
+
         if self.tree is None:
             print("Please first build the tree.")
         else:

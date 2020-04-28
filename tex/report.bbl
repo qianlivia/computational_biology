@@ -1,3 +1,48 @@
-\begin{thebibliography}{xx}
+\begin{thebibliography}{1}
+
+\bibitem{1987}
+{The neighbor-joining method: a new method for reconstructing phylogenetic
+  trees.}
+\newblock {\em Molecular Biology and Evolution}, July 1987.
+
+\bibitem{sokal58}
+R.~R. Sokal and C.~D. Michener.
+\newblock A statistical method for evaluating systematic relationships.
+\newblock {\em University of Kansas Science Bulletin}, 38:1409--1438, 1958.
+
+\bibitem{Dopazo1997}
+Joaqu{\'{\i}}n Dopazo and Jos{\'{e}}~Mar{\'{\i}}a Carazo.
+\newblock {Phylogenetic Reconstruction Using an Unsupervised Growing Neural
+  Network That Adopts the Topology of a Phylogenetic Tree}.
+\newblock {\em Journal of Molecular Evolution}, 44(2):226--233, February 1997.
+
+\bibitem{58325}
+Teuvo Kohonen.
+\newblock The self-organizing map.
+\newblock {\em Proceedings of the IEEE}, 78(9):1464--1480, 1990.
+
+\bibitem{Fritzke1994}
+Bernd Fritzke.
+\newblock Growing cell structures{\textemdash}a self-organizing network for
+  unsupervised and supervised learning.
+\newblock {\em Neural Networks}, 7(9):1441--1460, January 1994.
+
+\bibitem{DeBruyn2013}
+Alexandre~De Bruyn, Darren~P. Martin, and Pierre Lefeuvre.
+\newblock Phylogenetic reconstruction methods: An overview.
+\newblock In {\em Methods in Molecular Biology}, pages 257--277. Humana Press,
+  December 2013.
+
+\bibitem{Prasad2008}
+Arjun~B. Prasad, Marc~W. Allard, and Eric D.~Green and.
+\newblock Confirming the phylogeny of mammals by use of large comparative
+  sequence data sets.
+\newblock {\em Molecular Biology and Evolution}, 25(9):1795--1808, May 2008.
+
+\bibitem{Stoye2009}
+Martin Vingron, Jens Stoye, Hannes Luz, and Roland Wittler.
+\newblock Algorithms for phylogenetic reconstructions.
+\newblock February 2002-2009.
+\newblock Lecture notes from Bielefeld University.
 
 \end{thebibliography}
