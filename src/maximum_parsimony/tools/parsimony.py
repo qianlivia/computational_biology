@@ -161,7 +161,7 @@ class Parsimony():
         # If not empty, X is the set belonging to the current node.
         if X:
             sets = X
-        # Otherwise, the set for the node is the union of the children sets and one is added to the score.
+        # Otherwise, the set for the node is the union of the children sets and the score is increased by 1.
         else:
             sets = Y
             score += 1

@@ -10,6 +10,7 @@
 \lstset{aboveskip=24pt,belowskip=24pt}
 \usepackage{mathtools}
 \usepackage{amsfonts}
+\usepackage{amsmath}
 \lstset{language=Python}
 \usepackage[english]{babel}
 \usepackage[numbers]{natbib}
@@ -59,48 +60,113 @@ DNA sequencing is the process of determining the order of nucleoids in the DNA; 
 
 \subsection*{Neighbor joining}
 
-Neighbor joining is one of the distance-based methods created by Saitou and Sei in 1987 \cite{1987}.
-%TODO
+Neighbor joining is one of the distance-based methods created by Saitou and Sei in 1987 \cite{1987}. A distance matrix is needed for all of the calculations in this method; this matrix should contain the pairwise distances between the input sequences according to a predefined distance metric. This matrix reduces in size after each step because of the clustering nature of the method.
+
+
+This is one of the simplest and fastest methods in phylogeny, but it may not produce accurate results.
+
+\subsection*{WPGMA}
+
+Originally attributed to Sokal and Michener \cite{sokal58}, WPGMA (weighted pair group method with arithmetic mean) is a hierarchical clustering method that uses a distance matrix in a similar fashion as the neighbor joining method. Each step consists of the following:
+
+\begin{enumerate}
+\item Find the smallest element in the distance matrix. Let's say that it is $d(a, b)$ and that it belongs to elements $a$ and $b$ (both of them could be clusters). Let's create a parent node called $p$.
+
+\item We need to calculate branch lengths $\delta(a, p)$ and $\delta(b, p)$. If both $a$ and $b$ are leaves, these lengths are simply
+\begin{align}
+\delta(a, p) = \delta(b, p) = \frac{d(a, b)}{2}
+\end{align}
+
+If $a$ or $b$ are clusters, the height of the subtree belonging to them needs to be deducted from the amount mentioned before. Let's assume that $a$ is a cluster and that $c$ is a leaf of the subtree belonging to it. Then
+\begin{align}
+\delta(c, p) = \frac{d(a, b)}{2}
+\end{align}
+\begin{align}
+\begin{split}
+\delta(a, p) = \delta(c, p) - \delta(c, a) = \\
+= \frac{d(a, b)}{2} - \delta(c, a)
+\end{split}
+\end{align}
+
+In the case where $a$ is a leaf, $c$ could be represented by $a$ itself and $\delta(c, a)$ would be zero, therefore this is a generalized formula that can be used in every situation.
+
+\item After cluster $p = (a, b)$ is created, it should be integrated into the distance matrix as a new element, thus both a new column and a new row should be created (the columns and rows belonging to $a$ and $b$ can be deleted). Let's take an arbitrary element $q$. The distance between $q$ and $p$ can be calculated as
+\begin{align}
+d(p, q) = d((a, b), q) = \frac{d(a, q) + d(b, q)}{2}
+\end{align}
+
+\end{enumerate}
+
+This is repeated until there is only one node left (the third step is not needed in the last iteration).
 
 \subsection*{UPGMA}
 
-Originally attributed to Sokal and Michener \cite{sokal58}, this method uses... 
-%TODO
+Also created by Sokal and Michener, UPGMA (unweighted pair group method with arithmetic mean) is highly similar to WPGMA. The only difference lies in that it keeps track of the number of elements in each cluster, making the result itself unweighted. In Step 3, UPGMA uses cluster weights, resulting in the following distance matrix update rule:
 
-\subsection*{WPGMA}
-%TODO
+\begin{align}
+d((a, b), q) = \frac{d(a, q) \cdot m + d(b, q) \cdot n}{m + n}
+\end{align}
+
+where $a$ consists of $m$ and $b$ consists of $n$ elements. This is called \textit{proportional averaging}.
 
 \subsection*{Maximum parsimony}
 
-Maximum parsimony is an umbrella term for all the methods that... %TODO
+Maximum parsimony is an umbrella term for all the methods that are based on the principle that a model is better than another if it implies fewer evolutionary events. In these methods, the number of evolutionary events is represented by a cost called the \textit{parsimonious score}. There are two major categories: \textit{exact} methods are the ones that consider the score of all possible trees, thus giving a global minimum, and \textit{heuristic} methods are those that use some kind of technique to find a significant subset of all the trees and produces a somewhat sub-optimal result. As exact methods are often computationally infeasible, it is usually recommended to use a heuristic method that is let to run for a sufficient amount of time.
+
+Fitch's algorithm can be used to calculate the score of an input tree: the first-pass of the algorithm starts from the leaves and goes up to the root in order to determine the parsimonious score and possible sets of bases at each internal node, while the second-pass goes from top to bottom and helps in determining a hypothetical tree. In each step of the first phase, the algorithm takes a look at the bases belonging to the children nodes (which consist of one element in the case of the leaves), and then, assigns their intersection to the parent node if they have bases in common. If they do not have any base in common, the parent node gets the union of the children's sets and the parsimonious score is increased by 1. This algorithm is repeated for each site (position in the sequences) in all input sequences and the score is summed up in the end.
+
+There are a couple of popular heuristic methods that can help in exploring new trees, for example nearest neighbor interchange (NNI), subtree pruning and regrafting (SPR), or tree bisection and reconnection (TBR). NNI is the simplest one but is used for unrooted binary trees; the current tree may produce two new trees if all four branches connecting to one of its internal branches are swapped in every possible combination. In SPR, a certain subtree is removed from the current tree and gets reinserted elsewhere. TBR does the same as SPR, but instead of reinserting the subtree in the form it was in originally, it tries every possible way of connecting the two subtrees (similarly to NNI, it works for unrooted trees only). These methods are highly random, but they should be able to approximate the original distribution of trees given that they have enough time to run.
+
+Branch-and-bound, an exact method that filters out a certain number of trees, may reduce the running time of the exhaustive search — an exact method that goes through all possible trees — significantly. This makes use of the fact that adding a new edge to a tree increases its parsimonious score, thus avoids going for trees that are bigger than the current one.
 
 \subsection*{Maximum likelihood}
 
-Maximum likelihood, like in many other cases where probabilistic methods can be used, makes use of the basics of Bayesian statistics and looks at the probability of a certain sequence given a model (the model can be freely chosen). It may have a high algorithmic complexity as evaluating one sequence in itself may be computationally intensive, let alone multiple sequences. There are Bayesian methods that build upon ML; the major difference between these two groups of tree-building algorithms is that Bayesian methods take prior knowledge into account.
+Maximum likelihood, like in many other cases where probabilistic methods can be used, makes use of the basics of Bayesian statistics and looks at the probability of a certain sequence given a model (the model can be freely chosen). It may have a high algorithmic complexity as evaluating one sequence in itself may be computationally intensive, let alone multiple sequences. There are Bayesian methods (e.g., MCMC) that build upon ML; the major difference between these two groups of tree-building algorithms is that Bayesian methods take prior knowledge into account.
 
 \subsection*{Self-growing tree algorithm or self-organizing tree algorithm}
 
 This one is based on a paper published in 1997 by Dopazo and Carazo \cite{Dopazo1997} and is a combination of the Kohonen self-organizing map \cite{58325} and the growing cell structures algorithm of Fritzke \cite{Fritzke1994}. This is an unsupervised learning network that starts out as a tree consisting of a small number of nodes (the paper mentioned two sister nodes) and then alternates between growing and adapting to the input sequences until it is fully grown and every taxonomical unit is assigned a proper place. The strictest exit condition guarantees that every input sequence is associated to a unique cell.
 
-First, the input sequences need to be converted to one-hot encoding. Secondly, the tree's initial node(s) and the corresponding weight matrices that the encoded input sequences will ultimately be compared to need to be created; in order to distinguish inner nodes from leaves, the authors of the paper mention that it would be best to call them nodes and cells, respectively. In each step, nodes are considered "closed", meaning that they cannot be assigned sequences after they transition from being a cell to a node. After the first few cells are initialized with numbers ranging from 0 to 1, the alternating phases begin to take place. The first phase is called adaptation, which is basically what characterizes Kohonen's self-organizing maps: the input points are compared to all available cells and those that are closest to each of the inputs are updated, along with their neighborhood. After running this for a number of epochs, the inputs are mapped to appropriate positions in the output space, that is, the cells that they are the closest to according to a predefined metric, which is...
+First, the input sequences need to be converted to one-hot encoding. Secondly, the tree's initial node(s) and the corresponding weight matrices that the encoded input sequences will ultimately be compared to need to be created; in order to distinguish inner nodes from leaves, the authors of the paper mention that it would be best to call them nodes and cells, respectively. In each step, nodes are considered "closed", meaning that they cannot be assigned sequences after they transition from being a cell to a node. After the first few cells are initialized with numbers ranging from 0 to 1, the alternating phases begin to take place. The first phase is called adaptation, which is basically what characterizes Kohonen's self-organizing maps: the input points are compared to all available cells and those that are closest to each of the inputs are updated, along with their neighborhood (in the paper, finding the winning cell and updating its neighborhood is referred to as a \textit{presentation}). After running this for a number of epochs, the inputs are mapped to appropriate positions in the output space, namely, the cells that they are the closest to according to a predefined metric. This distance metric is defined as
 
 \begin{align}
-\frac{1}{2}
+d_{S_j C_j} = \frac{\sum_{r = 1}^A S_j(r, l) \cdot C_i(r, l)}{L}
 \end{align}
 
-The concept of neighborhood is trickier than in the case of a 1D or 2D output space; ...
+where $S_k$ is sequence $k$, $C_i$ is cell $i$, $A$ is the number of characters in the alphabet (in our case, four) and $L$ is the length of the sequences.
 
-The second phase is the growing of the tree. As it is mentioned in the paper, ...
+The concept of neighborhood is trickier than when the output space is a 1D or 2D space; in the case where the winning cell's sister is a cell, the winning cell, the sister cell and their common ancestor (mother cell) all get updated — it should be noted that all three of them are assigned different update rates. However, if the sister is actually a subbranch of the tree and consists of multiple nodes and cells, only the winning cell is updated.
 
-The tree stops growing when the resource value of the cell with the highest value is smaller than a predefined threshold — this threshold is zero if the goal is to map each sequence to a unique cell, or a sufficiently small number, in order to avoid inaccuracies in numerical calculations. The concept of resource value is related to the distance between cells and input points, and is defined as...
+The second phase is the growing of the tree. As it is mentioned in the paper \cite{Dopazo1997}, "the growing of the network takes place in the cell having higher resources. This cell gives rise to two new descendant cells [...] and transforms itself into a node. At this moment, its upper node becomes a grandmother node, and thereafter, it does not receive any more updating. The two new cells are, in principle, identical to the node which generated them".
+
+The tree stops growing when the resource value of the cell with the highest value is smaller than a predefined threshold — this threshold should be zero if the goal is to map each sequence to a unique cell, or rather, a sufficiently small number in order to avoid inaccuracies in numerical calculations. The concept of resource value is related to the distance between cells and input points, and is defined as
 
 \begin{align}
-\frac{1}{2}
+R_i = \frac{\sum_{k = 1}^K d_{S_k C_i}}{K}
 \end{align}
 
-The criteria used for monitoring the convergence of the network... This helps in setting an exit condition for the adaptation process (e.g., the process can be ended when the relative increase of the error falls below a small threshold).
+where $R$ is the resource value belonging to cell $i$, $S_k$ is sequence $k$, $C_i$ is cell $i$ and the summation is done over the $K$ sequences associated to cell $i$.
 
-What is also interesting is the update rule...
+The criteria used for monitoring the convergence of the network relies on the definition of the total error, $\epsilon$, "defined as the summation of the distances of each sequence to the corresponding winning cell after an epoch" \cite{Dopazo1997}. This helps in setting an exit condition for the adaptation process — e.g., the process can be ended when the relative increase of the error falls below a small threshold. The relative increase in error is
+
+\begin{align}
+\Big|\frac{\epsilon_t - \epsilon_{t-1}}{\epsilon_{t-1}}\Big| < E
+\end{align}
+
+What is also interesting is that there is an extended update rule that is based on Kohonen's original formula:
+
+\begin{align}
+C_i(\tau + 1) = C_i(\tau) + \eta_{t, \tau, i} \cdot [S_j - C_i(\tau)]
+\end{align}
+
+and $\eta_{t, \tau, i}$ is defined as a factor dependent on the number of cycles among others:
+
+\begin{align}
+\eta_{t, \tau, i} = \alpha_i \cdot \frac{1 - t}{M_t} \cdot (1 - b\tau)
+\end{align}
+
+where $\alpha_i$ is a coefficient dependent on the role of the current cell, $t$ is the total number of presentations, $M_t$ is the maximum number of presentations allowed ($\mu \times A \times L$) and $b$ is the
+slope for the reduction of the interaction as the number of presentations, $\tau$, increases within a cycle.
 
 \section*{Implementation}
 
@@ -108,8 +174,7 @@ I implemented the algorithms mentioned in the previous section using Python in c
 
 Regarding phylogeny, I decided to use unrooted trees because they are generally more accurate and more easily comparable in a lot of cases. Biopython's \ttvar{BaseTree} can easily be visualized with \ttvar{Bio.Phylo.draw}, a function that takes into account features like branch length and custom labels.
 
-%TODO methods implemented
-The methods I implemented are neighbor joining, UPGMA, WPGMA, maximum parsimony and SOTA. In the case of maximum parsimony, ... The self-organizing tree algorithm relies on a couple of hyperparameters; these need to be tuned before extensive testing.
+The methods I implemented are neighbor joining, UPGMA, WPGMA, maximum parsimony and SOTA. In the case of maximum parsimony, I implemented an exact algorithm that uses exhaustive search to find all the trees (with an additional option for branch-and-bound) and a heuristic algorithm that uses SPR. The self-organizing tree algorithm relies on a couple of hyperparameters; these need to be tuned before extensive testing.
 
 \section*{Data}
 
