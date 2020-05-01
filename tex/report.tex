@@ -60,10 +60,38 @@ DNA sequencing is the process of determining the order of nucleoids in the DNA; 
 
 \subsection*{Neighbor joining}
 
-Neighbor joining is one of the distance-based methods created by Saitou and Sei in 1987 \cite{1987}. A distance matrix is needed for all of the calculations in this method; this matrix should contain the pairwise distances between the input sequences according to a predefined distance metric. This matrix reduces in size after each step because of the clustering nature of the method.
+Neighbor joining is a distance-based method created by Saitou and Sei in 1987 \cite{1987}. A distance matrix is needed for all of the calculations in this method; this matrix should contain the pairwise distances between the input sequences according to a predefined distance metric. This matrix reduces in size after each step because of the clustering nature of the method.
 
+In each iteration, the following steps are repeated until there are only two nodes left:
 
-This is one of the simplest and fastest methods in phylogeny, but it may not produce accurate results.
+\begin{enumerate}
+\item Calculate the divergence ($r$) for every element. Divergence for element $a$ is the sum of the distances from $a$ to all the other elements.
+
+\item Calculate the new, alternative distance matrix using the following formula:
+\begin{align}
+d_{new}(i, j) = d(i, j) - \frac{r(i) + r(j)}{N - 2}
+\end{align}
+where $N$ is the number of elements in the current iteration.
+
+\item Let's take the smallest value in the new distance matrix and the units belonging to it (let them be denoted by $a$ and $b$). Let's call their ancestral node $p$. The length of the new branches can be calculated as such:
+\begin{align}
+\delta(a, p) = \frac{d(a, b)}{2} + \frac{r(a) - r(b)}{2 (N - 2)} \\
+\delta(b, p) = d(a, b) - \delta(a, p)
+\end{align}
+
+\item The rows and columns belonging to $p$ need to be added to the original distance matrix, while the ones belonging to $a$ and $b$ need to be deleted. After this, the difference between $p$ and the remaining nodes need to be calculated. Let's take an arbitrary element $c$ as an example:
+
+\begin{align}
+d(c, p) = \frac{d(a, c) + d(b, c) - d(a, b)}{2}
+\end{align}
+
+Branches $(a, p)$ and $(b, p)$ are now part of the tree that is being built.
+
+\end{enumerate}
+
+After this, we can join the remaining two elements by taking the ancestral node created in the last iteration and making the other node its child with their distance specified in the last iteration as the branch length.
+
+Although it was originally intended for unrooted trees, NJ can easily be extended to rooted trees. This is one of the simplest and fastest methods in phylogeny, but it may not produce accurate results.
 
 \subsection*{WPGMA}
 
@@ -108,6 +136,8 @@ d((a, b), q) = \frac{d(a, q) \cdot m + d(b, q) \cdot n}{m + n}
 \end{align}
 
 where $a$ consists of $m$ and $b$ consists of $n$ elements. This is called \textit{proportional averaging}.
+
+There are situations in which it is not recommended to use UPGMA, e.g., when the three-point criterion is not fulfilled. It says that for any three taxa, $d(a, c) \le max(d(a, b), d(b, c))$, i.e., the two greatest distances are equal. This is needed because UPGMA assumes a constant rate of evolution across lineages, therefore none of the leaves can be further away from the root than the others.
 
 \subsection*{Maximum parsimony}
 
@@ -179,6 +209,8 @@ The methods I implemented are neighbor joining, UPGMA, WPGMA, maximum parsimony 
 \section*{Data}
 
 \section*{Experiments}
+
+\subsection*{Maximum parsimony - versions}
 
 \subsection*{Hyperparameters of SOTA}
 

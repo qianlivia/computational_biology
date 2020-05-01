@@ -123,13 +123,10 @@ class Distance_Calculator():
             # Number of nodes remaining
             N = dm.size
 
-        # Create last inner node
-        node_name = "Inner{}".format(nr_inner)
-        inner_clade = BaseTree.Clade(None, node_name)
-
-        # Append last two nodes
+        # Join last two nodes (inner_clade is clade[1])
         inner_clade.clades.append(clades[0])
-        inner_clade.clades.append(clades[1])
+        argmin1, argmin2 = dm.argmax() # Labels
+        clades[0].branch_length = dm[argmin1][argmin2] # Distance is the branch length
 
         # Create tree
         self.tree = BaseTree.Tree(inner_clade, rooted=False)
@@ -166,8 +163,10 @@ class Distance_Calculator():
             inner_clade.clades.append(c1)
             inner_clade.clades.append(c2)
 
-            # Append new node to the appropriate places
+            # Append new node
             dm.add([node_name])
+
+            # Branch length from the current node to the leaves
             clade_children_branch_length.add([node_name])
             clade_children_branch_length[node_name] = dm[argmin1][argmin2]/2
 
@@ -246,7 +245,6 @@ class Distance_Calculator():
 
             # Delete appropriate rows, columns and labels.
             dm.drop([argmin1, argmin2])
-            clade_children_branch_length.drop([])
 
             # Discard the old nodes and append the new one. The old clades need to be discarded because relative position is used when referring to them!
             del clades[minpos2]
