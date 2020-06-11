@@ -41,7 +41,7 @@ print("Neighbor joining")
 start = time.time()
 tree = constructor.nj(dm)
 end = time.time()
-print("Neigbor joining run in {} seconds.".format(end - start))
+print("Neigbor joining ran in {} seconds.".format(end - start))
 
 # Draw the phylogenetic tree
 Phylo.draw(tree, label_func=get_label)
@@ -58,7 +58,7 @@ print("UPGMA")
 start = time.time()
 tree = constructor.upgma(dm)
 end = time.time()
-print("UPGMA run in {} seconds.".format(end - start))
+print("UPGMA ran in {} seconds.".format(end - start))
 
 # Draw the phylogenetic tree
 Phylo.draw(tree, label_func=get_label)

@@ -1,0 +1,18 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Methods}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Sequence alignment}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Neighbor joining}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{WPGMA}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{UPGMA}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{Maximum parsimony}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.6}{Maximum likelihood}{section.2}% 8
+\BOOKMARK [2][-]{subsection.2.7}{Self-growing tree algorithm}{section.2}% 9
+\BOOKMARK [1][-]{section.3}{Implementation}{}% 10
+\BOOKMARK [1][-]{section.4}{Data}{}% 11
+\BOOKMARK [1][-]{section.5}{Experiments}{}% 12
+\BOOKMARK [2][-]{subsection.5.1}{Maximum parsimony \204 versions}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.2}{Hyper-parameters of SOTA}{section.5}% 14
+\BOOKMARK [1][-]{section.6}{Results}{}% 15
+\BOOKMARK [2][-]{subsection.6.1}{Comparison with regard to running time}{section.6}% 16
+\BOOKMARK [2][-]{subsection.6.2}{Comparison with regard to accuracy}{section.6}% 17
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 18

@@ -95,7 +95,7 @@ class Parsimony():
 
         returns: tree
         """
-        return BaseTree.Tree(root, rooted=False)
+        return BaseTree.Tree(root, rooted=True)
 
     def _create_inner_node(self, left: ParsimonyClade, right: ParsimonyClade, threshold: int, name: str = None):
         """

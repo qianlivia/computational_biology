@@ -1,4 +1,10 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{DeBruyn2013}
+Alexandre~De Bruyn, Darren~P. Martin, and Pierre Lefeuvre.
+\newblock Phylogenetic reconstruction methods: An overview.
+\newblock In {\em Methods in Molecular Biology}, pages 257--277. Humana Press,
+  December 2013.
 
 \bibitem{1987}
 {The neighbor-joining method: a new method for reconstructing phylogenetic
@@ -9,6 +15,31 @@
 R.~R. Sokal and C.~D. Michener.
 \newblock A statistical method for evaluating systematic relationships.
 \newblock {\em University of Kansas Science Bulletin}, 38:1409--1438, 1958.
+
+\bibitem{Gascuel1997}
+O.~Gascuel.
+\newblock {BIONJ}: an improved version of the {NJ} algorithm based on a simple
+  model of sequence data.
+\newblock {\em Molecular Biology and Evolution}, 14(7):685--695, July 1997.
+
+\bibitem{Fitch1971}
+Walter~M. Fitch.
+\newblock Toward defining the course of evolution: Minimum change for a
+  specific tree topology.
+\newblock {\em Systematic Zoology}, 20(4):406, December 1971.
+
+\bibitem{Ortiz2016}
+Karla Esmeralda~Vazquez Ortiz.
+\newblock {\em Advanced methods to solve the maximum parsimony problem}.
+\newblock PhD thesis, Universit{\'e} d'Angers, 2016.
+\newblock Computational Complexity [cs.CC]. English. NNT: 2016ANGE0015ff.
+  fftel-01479049.
+
+\bibitem{Stoye2009}
+Martin Vingron, Jens Stoye, Hannes Luz, and Roland Wittler.
+\newblock Algorithms for phylogenetic reconstructions.
+\newblock February 2002-2009.
+\newblock Lecture notes from Bielefeld University.
 
 \bibitem{Dopazo1997}
 Joaqu{\'{\i}}n Dopazo and Jos{\'{e}}~Mar{\'{\i}}a Carazo.
@@ -23,15 +54,15 @@ Teuvo Kohonen.
 
 \bibitem{Fritzke1994}
 Bernd Fritzke.
-\newblock Growing cell structures{\textemdash}a self-organizing network for
+\newblock Growing cell structures {\textemdash} a self-organizing network for
   unsupervised and supervised learning.
 \newblock {\em Neural Networks}, 7(9):1441--1460, January 1994.
 
-\bibitem{DeBruyn2013}
-Alexandre~De Bruyn, Darren~P. Martin, and Pierre Lefeuvre.
-\newblock Phylogenetic reconstruction methods: An overview.
-\newblock In {\em Methods in Molecular Biology}, pages 257--277. Humana Press,
-  December 2013.
+\bibitem{dataset}
+NIH Intramural~Sequencing Center.
+\newblock {NISC Publications with Supplemental Data {\textemdash} Supplementary
+  Data for Prasad et al. 2008}.
+\newblock [Online; accessed 1-June-2020].
 
 \bibitem{Prasad2008}
 Arjun~B. Prasad, Marc~W. Allard, and Eric D.~Green and.
@@ -39,17 +70,9 @@ Arjun~B. Prasad, Marc~W. Allard, and Eric D.~Green and.
   sequence data sets.
 \newblock {\em Molecular Biology and Evolution}, 25(9):1795--1808, May 2008.
 
-\bibitem{Stoye2009}
-Martin Vingron, Jens Stoye, Hannes Luz, and Roland Wittler.
-\newblock Algorithms for phylogenetic reconstructions.
-\newblock February 2002-2009.
-\newblock Lecture notes from Bielefeld University.
-
-\bibitem{Ortiz2016}
-Karla Esmeralda~Vazquez Ortiz.
-\newblock {\em Advanced methods to solve the maximum parsimony problem}.
-\newblock PhD thesis, Université d’Angers, 2016.
-\newblock Computational Complexity [cs.CC]. English. NNT: 2016ANGE0015ff.
-  fftel-01479049.
+\bibitem{Zvelebil2007}
+Marketa Zvelebil.
+\newblock {\em Understanding Bioinformatics}, page 286.
+\newblock Garland Science, August 2007.
 
 \end{thebibliography}

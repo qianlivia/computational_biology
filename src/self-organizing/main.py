@@ -17,7 +17,7 @@ def main():
     start = time.time()
     par.train()
     end = time.time()
-    print("Self-organizing tree network run in {} seconds.".format(end - start))
+    print("Self-organizing tree network ran in {} seconds.".format(end - start))
     par.draw_tree()
 
 if __name__ == '__main__':

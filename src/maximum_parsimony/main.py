@@ -13,11 +13,11 @@ def main():
     for seq_record in SeqIO.parse(file_name, "fasta"):
         alignment.extend([seq_record])
 
-    par = ParsimonyExact(alignment[:4], bnb=True)
+    par = ParsimonyExact(alignment[:7], bnb=True)
     start = time.time()
     par.run(print_best=True)
     end = time.time()
-    print("Maximum parsimony (exact) run in {} seconds.".format(end - start))
+    print("Maximum parsimony (exact) ran in {} seconds.".format(end - start))
     par.draw_tree()
     
     print("------------------------------------------------------------------")
@@ -26,7 +26,7 @@ def main():
     start = time.time()
     par.run(print_best=True)
     end = time.time()
-    print("Maximum parsimony (with heuristics) run in {} seconds.".format(end - start))
+    print("Maximum parsimony (with heuristics) ran in {} seconds.".format(end - start))
     par.draw_tree()
 
 

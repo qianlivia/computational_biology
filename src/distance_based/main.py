@@ -9,13 +9,7 @@ def main():
     # file_name = "data/cons_noncode.fa"
     alignment = MultipleSeqAlignment([], Gapped(IUPAC.unambiguous_dna, "-"))
     for seq_record in SeqIO.parse(file_name, "fasta"):
-        print(seq_record.id)
-        print(repr(seq_record.seq))
-        print(len(seq_record))
         alignment.extend([seq_record])
-
-    # Print the alignment
-    print(alignment)
 
     ####################
     # Neighbor joining #
@@ -27,19 +21,19 @@ def main():
     start = time.time()
     dc.build_tree(dm)
     end = time.time()
-    print("Neighbor joining run in {} seconds.".format(end - start))
+    print("Neighbor joining ran in {} seconds.".format(end - start))
     dc.draw_tree()
-
-    dc = Distance_Calculator(mode="UPGMA")
-    dm = dc.create_distance_matrix(alignment)
 
     #########
     # UPGMA #
     #########
+    dc = Distance_Calculator(mode="UPGMA")
+    dm = dc.create_distance_matrix(alignment)
+
     start = time.time()
     dc.build_tree(dm)
     end = time.time()
-    print("UPGMA run in {} seconds.".format(end - start))
+    print("UPGMA ran in {} seconds.".format(end - start))
     dc.draw_tree()
 
     #########
@@ -51,7 +45,7 @@ def main():
     start = time.time()
     dc.build_tree(dm)
     end = time.time()
-    print("WPGMA run in {} seconds.".format(end - start))
+    print("WPGMA ran in {} seconds.".format(end - start))
     dc.draw_tree()
 
 if __name__ == '__main__':

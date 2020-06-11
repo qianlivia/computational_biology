@@ -12,7 +12,7 @@ class ParsimonyExact(Parsimony):
         Constructor.
 
         alignment: MultipleSeqAlignment containing the alignment
-        bnb: decides whether to use branch andbound (optional). Default is True. 
+        bnb: decides whether to use branch and bound (optional). Default is True. 
         """
         super(ParsimonyExact, self).__init__(alignment)
         self.bnb = bnb # Branch and bound. If false, use exhaustive search.

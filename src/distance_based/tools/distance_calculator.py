@@ -57,10 +57,12 @@ class Distance_Calculator():
         dm = distance_matrix.copy()
         if self.mode == 'NJ':
             self._neigbor_joining(dm)
-        if self.mode == 'UPGMA':
+        elif self.mode == 'UPGMA':
             self._upgma(dm)
-        if self.mode == 'WPGMA':
+        elif self.mode == 'WPGMA':
             self._wpgma(dm)
+        else:
+            raise NotImplementedError("This method does not exist or is not yet implemented")
 
     def _neigbor_joining(self, dm: Matrix):
         """ Neighbor joining.
@@ -129,7 +131,7 @@ class Distance_Calculator():
         clades[0].branch_length = dm[argmin1][argmin2] # Distance is the branch length
 
         # Create tree
-        self.tree = BaseTree.Tree(inner_clade, rooted=False)
+        self.tree = BaseTree.Tree(inner_clade, rooted=True)
 
     def _wpgma(self, dm: Matrix):
         """ WPGMA.
@@ -189,7 +191,7 @@ class Distance_Calculator():
             N = dm.size
 
         # Create tree
-        self.tree = BaseTree.Tree(clades[0], rooted=False)
+        self.tree = BaseTree.Tree(clades[0], rooted=True)
 
     def _upgma(self, dm: Matrix):
         """ UPGMA.
@@ -256,7 +258,7 @@ class Distance_Calculator():
             N = dm.size
 
         # Create tree
-        self.tree = BaseTree.Tree(clades[0], rooted=False)
+        self.tree = BaseTree.Tree(clades[0], rooted=True)
 
     def get_label(self, clade):
         """

@@ -1,4 +1,5 @@
 from Bio.Phylo import BaseTree
+from Bio.Phylo import draw
 
 names = ["A", "B", "C", "D"]
 
@@ -27,6 +28,8 @@ print(clades)
 inner_clade = BaseTree.Clade(None, "Inner2")
 inner_clade.clades.append(clades[0])
 inner_clade.clades.append(clades[1])
-tree = BaseTree.Tree(inner_clade, rooted=False)
+tree = BaseTree.Tree(inner_clade, rooted=True)
 
 print(tree)
+
+draw(tree)

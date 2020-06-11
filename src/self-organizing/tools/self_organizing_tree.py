@@ -396,7 +396,7 @@ class SOTA():
         returns: tree
         """
 
-        return BaseTree.Tree(root, rooted=False)
+        return BaseTree.Tree(root, rooted=True)
 
     def get_label(self, clade: SOTAClade):
         """
