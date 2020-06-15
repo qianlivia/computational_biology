@@ -13,6 +13,9 @@ class ParsimonyHeuristics(Parsimony):
         Constructor.
 
         alignment: MultipleSeqAlignment containing the alignment
+
+        seed: seed
+        limit: maximum number of iterations (optional; default is infinity)
         """
 
         super(ParsimonyHeuristics, self).__init__(alignment)
@@ -100,7 +103,7 @@ class ParsimonyHeuristics(Parsimony):
         """
         
         if self.limit == np.inf:
-            self.limit = self.size * 50
+            self.limit = self.size * 100
 
         min_tree = self.tree
         min_score = self.tree.score

@@ -8,11 +8,11 @@
 \BOOKMARK [2][-]{subsection.2.6}{Maximum likelihood}{section.2}% 8
 \BOOKMARK [2][-]{subsection.2.7}{Self-growing tree algorithm}{section.2}% 9
 \BOOKMARK [1][-]{section.3}{Implementation}{}% 10
-\BOOKMARK [1][-]{section.4}{Data}{}% 11
-\BOOKMARK [1][-]{section.5}{Experiments}{}% 12
-\BOOKMARK [2][-]{subsection.5.1}{Maximum parsimony \204 versions}{section.5}% 13
-\BOOKMARK [2][-]{subsection.5.2}{Hyper-parameters of SOTA}{section.5}% 14
-\BOOKMARK [1][-]{section.6}{Results}{}% 15
-\BOOKMARK [2][-]{subsection.6.1}{Comparison with regard to running time}{section.6}% 16
-\BOOKMARK [2][-]{subsection.6.2}{Comparison with regard to accuracy}{section.6}% 17
-\BOOKMARK [1][-]{section.7}{Conclusion}{}% 18
+\BOOKMARK [2][-]{subsection.3.1}{Maximum parsimony \204 versions}{section.3}% 11
+\BOOKMARK [1][-]{section.4}{Data}{}% 12
+\BOOKMARK [1][-]{section.5}{Experiments}{}% 13
+\BOOKMARK [2][-]{subsection.5.1}{Comparison of running time}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.2}{Comparison of accuracy}{section.5}% 15
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Coding dataset}{subsection.5.2}% 16
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Non-coding dataset}{subsection.5.2}% 17
+\BOOKMARK [1][-]{section.6}{Conclusion}{}% 18

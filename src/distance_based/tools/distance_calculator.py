@@ -269,7 +269,7 @@ class Distance_Calculator():
         """
         if clade.name.startswith("Inner"):
             return ""
-        return clade.name.replace("_", " ")
+        return clade.name.replace("_", " ").split("/")[0]
 
     def draw_tree(self, show_branch_labels=False):
         """

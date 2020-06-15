@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.9.2)  11 JUN 2020 16:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7140 64-bit) (preloaded format=pdflatex 2019.9.2)  15 JUN 2020 01:23
 entering extended mode
 **./report.tex
 (report.tex
@@ -420,28 +420,51 @@ LaTeX Info: Redefining \_ on input line 42.
 "
 Package: etoolbox 2018/08/19 v2.5f e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count133
-) ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xurl\xurl.sty"
+)
+("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/booktabs\booktabs.sty
+"
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
+\heavyrulewidth=\dimen152
+\lightrulewidth=\dimen153
+\cmidrulewidth=\dimen154
+\belowrulesep=\dimen155
+\belowbottomsep=\dimen156
+\aboverulesep=\dimen157
+\abovetopsep=\dimen158
+\cmidrulesep=\dimen159
+\cmidrulekern=\dimen160
+\defaultaddspace=\dimen161
+\@cmidla=\count134
+\@cmidlb=\count135
+\@aboverulesep=\dimen162
+\@belowrulesep=\dimen163
+\@thisruleclass=\count136
+\@lastruleclass=\count137
+\@thisrulewidth=\dimen164
+)
+\toprulewidth=\skip60
+ ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xurl\xurl.sty"
 Package: xurl 2020/01/24 v 0.09 modify URL breaks
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 58.
+Package hyperref Info: Option `colorlinks' set `true' on input line 66.
 
 (report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -481,16 +504,16 @@ LaTeX Font Info:    ... okay on input line 64.
 ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii\supp-pdf.
 mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count134
-\scratchdimen=\dimen152
+\scratchcounter=\count138
+\scratchdimen=\dimen165
 \scratchbox=\box34
-\nofMPsegments=\count135
-\nofMParguments=\count136
+\nofMPsegments=\count139
+\nofMParguments=\count140
 \everyMPshowfont=\toks27
-\MPscratchCnt=\count137
-\MPscratchDim=\dimen153
-\MPnumerator=\count138
-\makeMPintoPDFobject=\count139
+\MPscratchCnt=\count141
+\MPscratchDim=\dimen166
+\MPnumerator=\count142
+\makeMPintoPDFobject=\count143
 \everyMPtoPDFconversion=\toks28
 )
 ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\epstopdf-bas
@@ -507,7 +530,7 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-\c@lstlisting=\count140
+\c@lstlisting=\count144
 \AtBeginShipoutBox=\box35
  ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\color.sty"
 Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
@@ -518,7 +541,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 147.
 )
-Package hyperref Info: Link coloring ON on input line 64.
+Package hyperref Info: Link coloring ON on input line 72.
 
 ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\nameref.sty"
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -527,11 +550,11 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 ring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count141
+\c@section@level=\count145
 )
-LaTeX Info: Redefining \ref on input line 64.
-LaTeX Info: Redefining \pageref on input line 64.
-LaTeX Info: Redefining \nameref on input line 64.
+LaTeX Info: Redefining \ref on input line 72.
+LaTeX Info: Redefining \pageref on input line 72.
+LaTeX Info: Redefining \nameref on input line 72.
  (report.out) (report.out)
 \@outlinefile=\write3
 \openout3 = `report.out'.
@@ -539,12 +562,12 @@ LaTeX Info: Redefining \nameref on input line 64.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+msa on input line 75.
+LaTeX Font Info:    Try loading font information for U+msa on input line 83.
 
 ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 75.
+LaTeX Font Info:    Try loading font information for U+msb on input line 83.
 
 ("C:\Users\HP\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -554,72 +577,115 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ] [2] [3]
 [4] [5]
-<img/nj.png, id=156, 712.46175pt x 402.303pt>
+<img/mp_9_taxa_heuristic.png, id=154, 708.246pt x 402.303pt>
+File: img/mp_9_taxa_heuristic.png Graphic file (type png)
+<use img/mp_9_taxa_heuristic.png>
+Package pdftex.def Info: img/mp_9_taxa_heuristic.png  used on input line 249.
+(pdftex.def)             Requested size: 424.82523pt x 241.31612pt.
+ [6]
+Underfull \vbox (badness 2035) has occurred while \output is active []
+
+<img/nj.png, id=167, 712.46175pt x 402.303pt>
 File: img/nj.png Graphic file (type png)
 <use img/nj.png>
-Package pdftex.def Info: img/nj.png  used on input line 261.
+Package pdftex.def Info: img/nj.png  used on input line 333.
 (pdftex.def)             Requested size: 472.03123pt x 266.54594pt.
-<img/upgma.png, id=158, 897.3525pt x 502.2765pt>
+<img/upgma.png, id=168, 897.3525pt x 502.2765pt>
 File: img/upgma.png Graphic file (type png)
 <use img/upgma.png>
-Package pdftex.def Info: img/upgma.png  used on input line 268.
+Package pdftex.def Info: img/upgma.png  used on input line 340.
 (pdftex.def)             Requested size: 472.03123pt x 264.21262pt.
-<img/wpgma.png, id=159, 897.95474pt x 502.2765pt>
+<img/wpgma.png, id=169, 897.95474pt x 502.2765pt>
 File: img/wpgma.png Graphic file (type png)
 <use img/wpgma.png>
-Package pdftex.def Info: img/wpgma.png  used on input line 275.
+Package pdftex.def Info: img/wpgma.png  used on input line 347.
 (pdftex.def)             Requested size: 472.03123pt x 264.03633pt.
-<img/mp_9_taxa.png, id=160, 707.64375pt x 401.70074pt>
+<img/mp_9_taxa.png, id=170, 707.64375pt x 402.303pt>
 File: img/mp_9_taxa.png Graphic file (type png)
 <use img/mp_9_taxa.png>
-Package pdftex.def Info: img/mp_9_taxa.png  used on input line 282.
-(pdftex.def)             Requested size: 472.03123pt x 267.95511pt.
-<img/sota.png, id=161, 869.649pt x 483.60675pt>
+Package pdftex.def Info: img/mp_9_taxa.png  used on input line 354.
+(pdftex.def)             Requested size: 472.03123pt x 268.35684pt.
+<img/sota.png, id=171, 869.649pt x 483.60675pt>
 File: img/sota.png Graphic file (type png)
 <use img/sota.png>
-Package pdftex.def Info: img/sota.png  used on input line 289.
+Package pdftex.def Info: img/sota.png  used on input line 361.
 (pdftex.def)             Requested size: 472.03123pt x 262.49414pt.
- [6] [7 <./img/nj.png> <./img/upgma.png>] [8 <./img/wpgma.png> <./img/mp_9_taxa
-.png>]
+ [7 <./img/mp_9_taxa_heuristic.png>] [8 <./img/nj.png> <./img/upgma.png>] [9 <.
+/img/wpgma.png> <./img/mp_9_taxa.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [9 <./img/sota.png>] (report.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 314.
- [10]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 314.
+
+Underfull \vbox (badness 6284) has occurred while \output is active []
+
+ [10 <./img/sota.png>]
+<img/nj_noncoding.png, id=210, 712.46175pt x 401.70074pt>
+File: img/nj_noncoding.png Graphic file (type png)
+<use img/nj_noncoding.png>
+Package pdftex.def Info: img/nj_noncoding.png  used on input line 380.
+(pdftex.def)             Requested size: 472.03123pt x 266.14691pt.
+<img/upgma_noncoding.png, id=211, 712.46175pt x 402.90524pt>
+File: img/upgma_noncoding.png Graphic file (type png)
+<use img/upgma_noncoding.png>
+Package pdftex.def Info: img/upgma_noncoding.png  used on input line 387.
+(pdftex.def)             Requested size: 472.03123pt x 266.94496pt.
+<img/wpgma_noncoding.png, id=212, 713.064pt x 402.90524pt>
+File: img/wpgma_noncoding.png Graphic file (type png)
+<use img/wpgma_noncoding.png>
+Package pdftex.def Info: img/wpgma_noncoding.png  used on input line 394.
+(pdftex.def)             Requested size: 472.03123pt x 266.72363pt.
+<img/mp_8_taxa_noncoding_1.png, id=213, 707.64375pt x 402.303pt>
+File: img/mp_8_taxa_noncoding_1.png Graphic file (type png)
+<use img/mp_8_taxa_noncoding_1.png>
+Package pdftex.def Info: img/mp_8_taxa_noncoding_1.png  used on input line 401.
+
+(pdftex.def)             Requested size: 472.03123pt x 268.35684pt.
+<img/mp_8_taxa_noncoding_2.png, id=214, 721.4955pt x 402.303pt>
+File: img/mp_8_taxa_noncoding_2.png Graphic file (type png)
+<use img/mp_8_taxa_noncoding_2.png>
+Package pdftex.def Info: img/mp_8_taxa_noncoding_2.png  used on input line 408.
+
+(pdftex.def)             Requested size: 472.03123pt x 263.20651pt.
+ [11] [12 <./img/nj_noncoding.png> <./img/upgma_noncoding.png>]
+[13 <./img/wpgma_noncoding.png> <./img/mp_8_taxa_noncoding_1.png>] (report.bbl
+[14 <./img/mp_8_taxa_noncoding_2.png>])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 433.
+ [15
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 433.
  (report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 314.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 314.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 433.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 433.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: C31531AC2B338FCFDCCC313CC34C8E15;1109.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 314.
+(rerunfilecheck)             Checksum: 59746DC0EE1CBBC0358FD8327D21684E;1120.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 433.
  ) 
 Here is how much of TeX's memory you used:
- 10952 strings out of 492895
- 164689 string characters out of 3125137
+ 11071 strings out of 492895
+ 166858 string characters out of 3125137
  418042 words of memory out of 3000000
- 14649 multiletter control sequences out of 15000+200000
- 11558 words of font info for 44 fonts, out of 3000000 for 9000
+ 14743 multiletter control sequences out of 15000+200000
+ 12173 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,14n,40p,1266b,440s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,14n,40p,1283b,483s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
-/cmbx12.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmex10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmmi10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/
-fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/HP/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/HP/AppData/Local/Pr
-ograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/HP/AppData
-/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/H
-P/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C
-:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
-8.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmsy8.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmti10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on report.pdf (10 pages, 446465 bytes).
+/cmbx10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmbx12.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmex10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/HP/AppData/Local/Programs/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/HP/AppData/Local/P
+rograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/HP/AppDat
+a/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/
+HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+r8.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmsy10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmsy8.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 2.9/fonts/
+type1/public/amsfonts/cm/cmti10.pfb><C:/Users/HP/AppData/Local/Programs/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on report.pdf (15 pages, 663376 bytes).
 PDF statistics:
- 262 PDF objects out of 1000 (max. 8388607)
- 68 named destinations out of 1000 (max. 500000)
- 170 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 317 PDF objects out of 1000 (max. 8388607)
+ 82 named destinations out of 1000 (max. 500000)
+ 200 words of extra memory for PDF output out of 10000 (max. 10000000)
 

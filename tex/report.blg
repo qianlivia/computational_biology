@@ -3,4 +3,6 @@ The style file: unsrt.bst
 Database file #1: report.bib
 Warning--empty author in 1987
 Warning--empty journal in Stoye2009
-(There were 2 warnings)
+Warning--empty journal in dataset
+Warning--empty year in dataset
+(There were 4 warnings)

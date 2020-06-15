@@ -411,7 +411,7 @@ class SOTA():
             return ""
         if clade.name.startswith("Node"):
             return ""
-        return clade.name.replace("_", " ")
+        return clade.name.replace("_", " ").split("/")[0]
 
     def draw_tree(self, show_branch_labels: bool = False):
         """
