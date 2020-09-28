@@ -1,8 +1,50 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: report.aux
-The style file: unsrt.bst
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: report.aux
+The style file: unsrtnat.bst
 Database file #1: report.bib
 Warning--empty author in 1987
 Warning--empty journal in Stoye2009
 Warning--empty journal in dataset
-Warning--empty year in dataset
-(There were 4 warnings)
+You've used 14 entries,
+            2481 wiz_defined-function locations,
+            658 strings with 7019 characters,
+and the built_in function-call counts, 5174 in all, are:
+= -- 485
+> -- 155
+< -- 13
++ -- 72
+- -- 44
+* -- 372
+:= -- 794
+add.period$ -- 55
+call.type$ -- 14
+change.case$ -- 25
+chr.to.int$ -- 14
+cite$ -- 18
+duplicate$ -- 288
+empty$ -- 507
+format.name$ -- 61
+if$ -- 1124
+int.to.chr$ -- 1
+int.to.str$ -- 15
+missing$ -- 15
+newline$ -- 90
+num.names$ -- 39
+pop$ -- 115
+preamble$ -- 1
+purify$ -- 14
+quote$ -- 0
+skip$ -- 168
+stack$ -- 0
+substring$ -- 266
+swap$ -- 58
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 92
+warning$ -- 3
+while$ -- 44
+width$ -- 0
+write$ -- 209
+(There were 3 warnings)

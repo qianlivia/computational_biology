@@ -42,7 +42,7 @@
 \newcommand*\dottvar[1]{\ifx\relax#1\else
   \expandafter\ifx\string.#1\string.\allowbreak\else#1\fi
   \expandafter\dottvar\fi}
-\usepackage{xurl}
+\usepackage{url}
 
 % abstract styling
 \renewenvironment{abstract}%
@@ -84,19 +84,23 @@ The aim of this work is to briefly describe and compare the performance of five 
 
 \section{Introduction}
 
-Phylogenetics is the study of the evolutionary history of species and groups of species. There are multiple ways to express the relationship between different groups; one common method is the construction of a phylogenetic tree (or evolutionary tree), where all taxa are present as leaves. Common traits can be observed using DNA sequences or morphology, the latter being generally more complex due to the many characteristics a certain species can have. Phylogenetic trees can be rooted and unrooted; the former is a version representing not only the similarity between each taxon but the ancestral relationships as well, while the latter form only illustrates the connection between the taxonomical units.
+Phylogenetics is the study of the evolutionary history of species and groups of species. There are multiple ways to express the relationship between different groups, one of them being the construction of phylogenetic trees (or evolutionary trees) where all taxa are present as leaves. Common traits can be observed using DNA sequences or morphology, where the latter is generally more complex due to the many characteristics a certain species can have. Phylogenetic trees can be rooted and unrooted; the former is a version representing not only the similarity between different taxa but the ancestral relationships as well, while the latter only illustrates the connection between the taxonomical units.
+
+\section{Background}
+
+DNA is a molecule that has two polynucleotide chains forming a double helix and carries information about an organism's development and reproduction. Genomes — genetic materials that make up an organism's body — consist of both protein-coding DNA (genes) and non-coding DNA. There are four different types of nucleoids — adenine (A), guanine (G), cytosine (C) and thymine (T) — that can define the characteristics of a DNA. DNA sequencing is the process of determining the order of such nucleoids in order to gain relevant information about the molecule at hand.
+
+DNA sequences need to be of the same length in order to be comparable with each other, therefore a proper sequence alignment is needed before one can start constructing phylogenetic trees. Sequence alignment is a way of arranging multiple DNA sequences into a matrix so that regions that show a high degree of similarity in multiple sequences are placed underneath each other. As this process can make the characters in the sequences shift, a special character (commonly a "-") is used to fill in the gaps.
+
+There are two main categories of tree-generating algorithms \cite{DeBruyn2013}: distance-based methods are based on measuring the difference between pairs of sequences, while character-based methods use the columns of a sequence alignment directly. Examples of distance-based algorithms include neighbor joining (NJ) \cite{1987}, UPGMA \cite{sokal58}, WPGMA \cite{sokal58} and BIONJ \cite{Gascuel1997}, while the two most widely used character-based methods are the maximum parsimony (MP) and maximum likelihood (ML) methods. While all these techniques are popular, distance methods are usually recommended when computational time is an important factor; in other cases, parsimony and likelihood are preferred as they are more rigorous and have the ability to explore different combinations.
 
 \section{Methods}
 
-DNA sequences need to be of the same length, therefore a proper sequence alignment is needed before constructing phylogenetic trees. Regarding tree-creating algorithms, there are two main categories to choose from \cite{DeBruyn2013}: there are distance-based methods, which measure the differences between pairs of sequences and character-based methods, which use the columns of a sequence alignment directly. Examples of distance-based algorithms include neighbor joining (NJ) \cite{1987}, UPGMA \cite{sokal58}, WPGMA \cite{sokal58} and BIONJ \cite{Gascuel1997}, while the two most widely used character-based methods are the maximum parsimony (MP) and maximum likelihood (ML) methods. While all these techniques are popular, distance methods are usually recommended when computational time is an important factor; in other cases, parsimony and likelihood are preferred as they are more rigorous and have the ability to explore different combinations.
+\subsection{Distance-based methods}
 
-\subsection{Sequence alignment}
+\subsubsection{Neighbor joining}
 
-DNA is a molecule that has two polynucleotide chains forming a double helix and carries information about an organism's development and reproduction. Genomes — genetic materials that make up an organism's body — consist of both protein-coding DNA (genes) and non-coding DNA. There are four different types of nucleoids — adenine (A), guanine (G), cytosine (C) and thymine (T) — that define the characteristics of the DNA containing them; DNA sequencing is the process of determining the order of such nucleoids in order to gain relevant information about the molecule at hand. Sequence alignment is a way of arranging multiple DNA sequences into a matrix so that regions that show a high degree of similarity in multiple sequences are placed underneath each other. As this process makes the characters in the sequences shift, a special character (commonly a "-") is used to fill in the gaps.
-
-\subsection{Neighbor joining}
-
-Neighbor joining is a distance-based method created by Saitou and Sei in 1987 \cite{1987}. A distance matrix is needed for all of the calculations in this method; this matrix should contain the pairwise distances between the input sequences according to a predefined distance metric. This matrix is reduced in size after each step because of the clustering nature of the method.
+Neighbor joining (NJ) is a distance-based method created by Saitou and Sei in 1987 \cite{1987}. A distance matrix is needed for all of the calculations in this method; this matrix should contain the pairwise distances between the input sequences according to a predefined distance metric. This matrix is reduced in size after each step because of the clustering nature of the method.
 
 In each iteration, the following steps are repeated until there are only two nodes left:
 
@@ -116,20 +120,18 @@ where $N$ is the number of elements in the current iteration.
 \end{align}
 
 \item The rows and columns belonging to $p$ need to be added to the original distance matrix, while the ones belonging to $a$ and $b$ need to be deleted. After this, the difference between $p$ and the remaining nodes need to be calculated. Let's take an arbitrary element $c$ as an example:
-
 \begin{align}
 d(c, p) = \frac{d(a, c) + d(b, c) - d(a, b)}{2}
 \end{align}
-
 Branches $(a, p)$ and $(b, p)$ are now part of the tree that is being built.
 
 \end{enumerate}
 
 After this, the remaining two elements can be joined by taking the ancestral node created in the last iteration and making the other node its child with their distance — that was specified in the last iteration — as the branch length.
 
-Although it was originally intended for unrooted trees, NJ can easily be extended to rooted trees. This is one of the simplest and fastest methods in phylogeny, but it may not produce accurate results.
+Although it was originally intended for unrooted trees, NJ can easily be extended to rooted trees. This is one of the simplest and fastest methods in phylogeny, but it may not produce accurate results due to its simplicity.
 
-\subsection{WPGMA}
+\subsubsection{WPGMA}
 
 Originally attributed to Sokal and Michener \cite{sokal58}, WPGMA (weighted pair group method with arithmetic mean) is a hierarchical clustering method that uses a distance matrix in a similar fashion as the neighbor joining method. Each step consists of the following and is repeated until there is only one node left:
 
@@ -140,8 +142,7 @@ Originally attributed to Sokal and Michener \cite{sokal58}, WPGMA (weighted pair
 \begin{align}
 \delta(a, p) = \delta(b, p) = \frac{d(a, b)}{2}
 \end{align}
-
-If $a$ or $b$ are clusters, the height of the subtree belonging to them needs to be deducted from the amount mentioned before. Suppose that $a$ is a cluster and that $c$ is a leaf of the subtree belonging to it. Then
+If $a$ or $b$ is a cluster, the height of the subtree that belongs to them needs to be subtracted from $\frac{d(a, b)}{2}$ to get the  corresponding branch length. Suppose that $a$ is a cluster and that $c$ is a leaf of the subtree belonging to it. In this case,
 \begin{align}
 \delta(c, p) = \frac{d(a, b)}{2}
 \end{align}
@@ -154,40 +155,41 @@ If $a$ or $b$ are clusters, the height of the subtree belonging to them needs to
 
 In the case where $a$ is a leaf, $c$ could be represented by $a$ itself and $\delta(c, a)$ would be zero, therefore this is a generalized formula that can be used in any situation.
 
-\item After cluster $p = (a, b)$ is created, it should be integrated into the distance matrix as a new element, therefore both a new column and a new row should be created (additionally, the columns and rows belonging to $a$ and $b$ can be deleted). The distance between $q$ and any arbitrary element $q$ can be calculated as
+\item After cluster $p = (a, b)$ is created, it should be integrated into the distance matrix as a new element; for this purpose, a new column and a new row should be created and the columns and rows belonging to $a$ and $b$ may be deleted. The distance between $p$ and any arbitrary element $q$ can be calculated as
 \begin{align}
-d(p, q) = d((a, b), q) = \frac{d(a, q) + d(b, q)}{2}
+\begin{split}
+d(p, q) = d((a, b), q) = \\
+= \frac{d(a, q) + d(b, q)}{2}
+\end{split}
 \end{align}
-
 This step is not needed in the last iteration.
 
 \end{enumerate}
 
-\subsection{UPGMA}
+\subsubsection{UPGMA}
 
-Also created by Sokal and Michener, UPGMA (unweighted pair group method with arithmetic mean) is highly similar to WPGMA. The only difference lies in that it keeps track of the number of elements in each cluster, making the resulting calculations unweighted. In Step 3, UPGMA uses cluster weights, resulting in the following distance matrix update rule:
-
+Also created by Sokal and Michener \cite{sokal58}, UPGMA (unweighted pair group method with arithmetic mean) is highly similar to WPGMA. The only difference lies in that it keeps track of the number of elements in each cluster, making the resulting calculations unweighted. In Step 3, UPGMA uses cluster weights, resulting in the following distance matrix update rule:
 \begin{align}
 d((a, b), q) = \frac{d(a, q) \cdot m + d(b, q) \cdot n}{m + n}
 \end{align}
-
 where $a$ consists of $m$ and $b$ consists of $n$ elements. This is called \textit{proportional averaging}.
 
 There are situations in which it is not recommended to use UPGMA, e.g., when the three-point criterion is not fulfilled. This criterion demands that for any three elements $d(a, c) \le max(d(a, b), d(b, c))$, i.e., that the two greatest distances be equal. This is needed because UPGMA assumes a constant rate of evolution across lineages, therefore none of the leaves can be further away from the root than the others.
 
-\subsection{Maximum parsimony}
+\subsection{Character-based methods}
+\subsubsection{Maximum parsimony}
 
-Maximum parsimony is an umbrella term for all the methods that are based on the principle that a model is better than another if it implies fewer evolutionary events. The number of evolutionary events is represented by a cost called the \textit{parsimonious score}. There are two major categories: \textit{exact} methods are the ones that consider the score of all possible trees, thus giving a global minimum, and \textit{heuristic} methods are those that use some kind of technique to find a significant subset of all the trees and produces a somewhat sub-optimal result. As exact methods are often computationally infeasible, it is recommended to use a heuristic method and let it run for a sufficient amount of time.
+Maximum parsimony (MP) is an umbrella term for all the methods that are based on the principle that a model is better than another if it implies fewer evolutionary events. The number of evolutionary events is represented by a cost called the \textit{parsimonious score}. There are two major categories: \textit{exact} methods are the ones that consider the score of all possible trees, thus giving a global minimum, and \textit{heuristic} methods are those that use some kind of technique to find a significant subset of all the trees and produces a somewhat sub-optimal result. As exact methods are often computationally infeasible, it is recommended to use a heuristic method and let it run for a sufficient amount of time.
 
-Fitch's algorithm \cite{Fitch1971} can be used to calculate the score of an input tree  \cite{Ortiz2016} \cite{Stoye2009}: the first-pass of the algorithm starts from the leaves and goes up to the root to determine the parsimonious score and possible sets of bases at each internal node, while the second-pass goes from top to bottom and helps in determining a hypothetical tree. In each step of the first phase, the algorithm takes a look at the bases belonging to the children nodes (which consist of one element in the case of the leaves), and then, assigns their intersection to the parent node if they have bases in common. If they do not have any bases in common, the parent node gets the union of the children's sets and the parsimonious score is increased by 1. This algorithm is repeated for each site — that is, position in the sequences — in all input sequences and the score is summed up in the end.
+Fitch's algorithm \cite{Fitch1971} can be used to calculate the score of an input tree  \cite{Ortiz2016}\cite{Stoye2009}: the first-pass of the algorithm starts from the leaves and goes up to the root to determine the parsimonious score and possible sets of bases at each internal node, while the second-pass goes from top to bottom and helps in determining a hypothetical tree. In each step of the first phase, the algorithm takes a look at the bases belonging to the children nodes (which consist of one element in the case of the leaves), and then, assigns their intersection to the parent node if they have bases in common. If they do not have any bases in common, the parent node gets the union of the children's sets and the parsimonious score is increased by 1. This algorithm is repeated for each site — that is, position in the sequences — in all input sequences and the score is summed up in the end.
 
-There are a number of heuristic methods that can help in exploring new trees, for example nearest neighbor interchange (NNI), subtree pruning and regrafting (SPR), or tree bisection and reconnection (TBR). NNI is the simplest one but is used for unrooted binary trees; the current tree may produce two new trees if all four branches connecting to one of its internal branches are swapped in every possible combination. In SPR, a certain subtree is removed from the current tree and gets reinserted elsewhere. TBR does the same as SPR, but instead of reinserting the subtree in the form it was in originally, it tries every possible way of connecting the two subtrees; similarly to NNI, it works for unrooted trees only. These methods are stochastic, but they should be able to approximate the original distribution of trees given that they have enough time to run.
+There is a number of heuristic methods that can help in exploring new trees, for example nearest neighbor interchange (NNI), subtree pruning and regrafting (SPR), or tree bisection and reconnection (TBR) \cite{felsenstein2004}. NNI is the simplest one but is used for unrooted binary trees; the current tree may produce two new trees if all four branches connecting to one of its internal branches are swapped in every possible combination. In SPR, a certain subtree is removed from the current tree and gets reinserted elsewhere. TBR does the same as SPR, but instead of reinserting the subtree in the form it was in originally, it tries every possible way of connecting the two subtrees; similarly to NNI, it works for unrooted trees only. These methods are stochastic, but they should be able to approximate the original distribution of trees given that they have enough time to run.
 
-Branch and bound, an exact method that filters out a certain number of trees, may reduce the running time of the exhaustive search — an exact method that goes through all possible trees — significantly. This makes use of the fact that adding a new edge to a tree increases its parsimonious score, thus avoids going for trees that are bigger than the current one in each step.
+Branch and bound, an exact method that filters out a certain number of trees, may reduce the running time of the exhaustive search significantly. This is a method that considers all possible trees but makes use of the fact that adding a new edge to a tree increases its parsimonious score, thus avoids going for trees that are bigger than the current one in each step.
 
-\subsection{Maximum likelihood}
+\subsubsection{Maximum likelihood}
 
-Maximum likelihood, like in many other cases where probabilistic methods can be used, makes use of the basics of Bayesian statistics and examines the probability of a certain sequence given a model (the model is arbitrarily chosen). It may have a high algorithmic complexity as evaluating one sequence in itself may be computationally intensive, let alone multiple sequences. There are also Bayesian methods (e.g., MCMC) that build upon ML; the major difference between these two groups of tree-building algorithms is that Bayesian methods take prior knowledge into account.
+Maximum likelihood (ML), like in many cases where probabilistic methods are used, makes use of the basics of Bayesian statistics and examines the probability of a certain sequence given a model; the higher the probability the better the model. In some cases, the relationship between successive sites — characters — is the driving factor in determining the best model, e.g., in Hidden Markov models, where transition matrices are used for storing such information. It may have a high algorithmic complexity as evaluating one sequence in itself can be computationally intensive, let alone multiple sequences. Additionally, there are Bayesian methods (e.g., Markov chain Monte Carlo) that build upon ML; the major difference between these two groups of tree-building algorithms is that Bayesian methods take prior knowledge into account.
 
 \subsection{Self-growing tree algorithm}
 
@@ -240,7 +242,7 @@ I implemented the algorithms mentioned in the previous section using Python in c
 
 I decided to use rooted trees because they are generally more accurate and more easily comparable in a lot of cases. Biopython's \ttvar{BaseTree} can easily be visualized with \ttvar{Bio.Phylo.draw}, a function that takes into account features like branch length and custom labels.
 
-The methods I implemented are neighbor joining, UPGMA, WPGMA, maximum parsimony and SOTA. In the case of MP, I implemented an exact algorithm that uses exhaustive search to find all the trees (with an additional option for branch and bound) and a heuristic algorithm that uses SPR. SOTA contains a few hyper-parameters; these can be tuned before extensive testing. I found that the following parameters provided a relatively fast convergence: $\alpha_w = 0.5$ (current cell's update rate), $\alpha_m = 0.02$ (mother cell's update rate), $\alpha_s = 0.01$ (sister cell's update rate), $b = 0$ (slope), $\eta = 0.5$ (learning rate).
+The methods I implemented are neighbor joining, UPGMA, WPGMA, maximum parsimony and SOTA. In the case of MP, I implemented an exact algorithm — with an additional option for branch and bound — that uses exhaustive search to find all the trees and a heuristic algorithm that uses SPR (I will refer to them as exact and heuristic methods, respectively). SOTA contains a few hyper-parameters; these can be tuned before extensive testing. I found that the following parameters provided a relatively fast convergence: $\alpha_w = 0.5$ (current cell's update rate), $\alpha_m = 0.02$ (mother cell's update rate), $\alpha_s = 0.01$ (sister cell's update rate), $b = 0$ (slope), $\eta = 0.5$ (learning rate).
 
 \subsection{Maximum parsimony — versions}
 
@@ -261,17 +263,18 @@ Figure \ref{fig:mp_8_taxa_heuristic} shows a tree resulting from a 50-iteration 
 
 \section{Data}
 
-The first dataset I used is a protein-coding sequence alignment \cite{dataset} consisting of 44 sequences of different vertebrate taxa. The input is first processed by Biopython's sequence alignment class before being passed to any of the algorithms implemented. Since this dataset is evaluated in a 2008 paper by Prasad et al. \cite{Prasad2008}, I decided to refer to it and compare my results with the findings of the authors of this publication. The other dataset I ran my experiments on uses non-coding DNA sequences but is identical to the coding dataset in every other aspect, including the fact that it can be found in Prasad's work.
+The first dataset I used is a protein-coding sequence alignment \cite{dataset} consisting of 44 sequences of different vertebrate taxa. The input is first processed by Biopython's sequence alignment class before being passed to any of the algorithms implemented. Since this dataset was evaluated in a 2008 paper by Prasad et al. \cite{Prasad2008}, I decided to compare my results with those published in this work. From now on, I will refer to this dataset as the \textit{coding dataset}. The other dataset I ran my experiments on uses non-coding DNA sequences but is identical to the coding dataset in every other aspect \cite{dataset}. I will refer to this as the \textit{non-coding dataset}. For the experiments I conducted, I assumed that the relationship between the speed of my algorithms holds for different datasets.
 
 \section{Experiments}
 
-%TODO First, I tested what parameters or version of a certain algorithm would be best for the final tests.
+%TODO
+First, I tested what parameters or version of a certain algorithm would be best for the final tests.
 
-%\section{Results}
+\section{Results}
 
 \subsection{Comparison of running time}
 
-All the experiments were run on CPU (Intel Core i7-8650U, 1.9 GHz); none of the algorithms were optimized for GPU which made testing hard to a certain extent. Some methods were computationally intensive (e.g, maximum parsimony with 9 species and SOTA with 44 species), therefore I will include the result of only one test run in these cases. The following results were produced on the coding dataset; it can be assumed that the relationship between the speed of these algorithms holds for different datasets.
+All the experiments were run on CPU (Intel Core i7-8650U, 1.9 GHz); none of the algorithms were optimized for GPU which made testing hard to a certain extent. Some methods were computationally intensive (e.g, maximum parsimony with 9 species and SOTA with 44 species), therefore I will include the result of only one test run in these cases. The results in this section were produced using the coding dataset.
 
 \begin{table}[H]
 \label{table:distance}
@@ -427,7 +430,14 @@ Combining these methods by e.g. starting out from a tree pre-calculated with nei
 The repository is available on \href{https://github.com/Leena01/computational_biology}{GitHub}. Since the project provides a simplified overview of various phylogenetic methods, I hope that it can serve as reference for others who are interested in this field.
 
 \newpage
-\bibliographystyle{unsrt}
+\hypersetup{
+	urlcolor=black
+}
+\bibliographystyle{unsrtnat}
 \bibliography{report}
+
+\newpage
+\appendix
+\section{Functionality tests}
 
 \end{document}

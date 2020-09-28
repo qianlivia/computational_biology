@@ -1,18 +1,22 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Methods}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Sequence alignment}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Neighbor joining}{section.2}% 4
-\BOOKMARK [2][-]{subsection.2.3}{WPGMA}{section.2}% 5
-\BOOKMARK [2][-]{subsection.2.4}{UPGMA}{section.2}% 6
-\BOOKMARK [2][-]{subsection.2.5}{Maximum parsimony}{section.2}% 7
-\BOOKMARK [2][-]{subsection.2.6}{Maximum likelihood}{section.2}% 8
-\BOOKMARK [2][-]{subsection.2.7}{Self-growing tree algorithm}{section.2}% 9
-\BOOKMARK [1][-]{section.3}{Implementation}{}% 10
-\BOOKMARK [2][-]{subsection.3.1}{Maximum parsimony \204 versions}{section.3}% 11
-\BOOKMARK [1][-]{section.4}{Data}{}% 12
-\BOOKMARK [1][-]{section.5}{Experiments}{}% 13
-\BOOKMARK [2][-]{subsection.5.1}{Comparison of running time}{section.5}% 14
-\BOOKMARK [2][-]{subsection.5.2}{Comparison of accuracy}{section.5}% 15
-\BOOKMARK [3][-]{subsubsection.5.2.1}{Coding dataset}{subsection.5.2}% 16
-\BOOKMARK [3][-]{subsubsection.5.2.2}{Non-coding dataset}{subsection.5.2}% 17
-\BOOKMARK [1][-]{section.6}{Conclusion}{}% 18
+\BOOKMARK [1][-]{section.2}{Background}{}% 2
+\BOOKMARK [1][-]{section.3}{Methods}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Distance-based methods}{section.3}% 4
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Neighbor joining}{subsection.3.1}% 5
+\BOOKMARK [3][-]{subsubsection.3.1.2}{WPGMA}{subsection.3.1}% 6
+\BOOKMARK [3][-]{subsubsection.3.1.3}{UPGMA}{subsection.3.1}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Character-based methods}{section.3}% 8
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Maximum parsimony}{subsection.3.2}% 9
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Maximum likelihood}{subsection.3.2}% 10
+\BOOKMARK [2][-]{subsection.3.3}{Self-growing tree algorithm}{section.3}% 11
+\BOOKMARK [1][-]{section.4}{Implementation}{}% 12
+\BOOKMARK [2][-]{subsection.4.1}{Maximum parsimony \204 versions}{section.4}% 13
+\BOOKMARK [1][-]{section.5}{Data}{}% 14
+\BOOKMARK [1][-]{section.6}{Experiments}{}% 15
+\BOOKMARK [1][-]{section.7}{Results}{}% 16
+\BOOKMARK [2][-]{subsection.7.1}{Comparison of running time}{section.7}% 17
+\BOOKMARK [2][-]{subsection.7.2}{Comparison of accuracy}{section.7}% 18
+\BOOKMARK [3][-]{subsubsection.7.2.1}{Coding dataset}{subsection.7.2}% 19
+\BOOKMARK [3][-]{subsubsection.7.2.2}{Non-coding dataset}{subsection.7.2}% 20
+\BOOKMARK [1][-]{section.8}{Conclusion}{}% 21
+\BOOKMARK [1][-]{appendix.A}{Functionality tests}{}% 22
