@@ -7,13 +7,13 @@ import numpy as np
 
 
 def main():
-    # file_name = "data/coding.fa"
-    file_name = "data/cons_noncode.fa"
+    file_name = "data/coding.fa"
+    # file_name = "data/cons_noncode.fa"
     alignment = MultipleSeqAlignment([], Gapped(IUPAC.unambiguous_dna, "-"))
     for seq_record in SeqIO.parse(file_name, "fasta"):
         alignment.extend([seq_record])
 
-    par = SOTA(alignment)
+    par = SOTA(alignment[:5])
     start = time.time()
     par.train()
     end = time.time()

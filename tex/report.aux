@@ -36,6 +36,7 @@
 \citation{Ortiz2016}
 \citation{Stoye2009}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.3}UPGMA}{3}{subsubsection.3.1.3}}
+\newlabel{eq:upgma}{{9}{3}{UPGMA}{equation.3.9}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Character-based methods}{3}{subsection.3.2}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Maximum parsimony}{3}{subsubsection.3.2.1}}
 \citation{felsenstein2004}
@@ -49,48 +50,59 @@
 \citation{dataset}
 \citation{Prasad2008}
 \citation{dataset}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Implementation}{6}{section.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Maximum parsimony \IeC {\textemdash } versions}{6}{subsection.4.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Data}{6}{section.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Data}{5}{section.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Implementation}{6}{section.5}}
 \@writefile{toc}{\contentsline {section}{\numberline {6}Experiments}{6}{section.6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The result of MP run on 8 elements of the coding dataset. The result is the best tree after 50 iterations.\relax }}{7}{figure.caption.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Maximum parsimony \IeC {\textemdash } versions}{6}{subsection.6.1}}
+\citation{Dopazo1997}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The result of running the heuristic MP method on 8 elements of the coding dataset. The tree shown in this figure is the one with the highest score after 50 iterations.\relax }}{7}{figure.caption.1}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:mp_8_taxa_heuristic}{{1}{7}{The result of MP run on 8 elements of the coding dataset. The result is the best tree after 50 iterations.\relax }{figure.caption.1}{}}
+\newlabel{fig:mp_8_taxa_heuristic}{{1}{7}{The result of running the heuristic MP method on 8 elements of the coding dataset. The tree shown in this figure is the one with the highest score after 50 iterations.\relax }{figure.caption.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Hyper-parameters of SOTA}{7}{subsection.6.2}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Different combinations of the SOTA parameters, the corresponding speed averaged over two runs and the answer to whether the algorithm converged after 50 iterations for all runs. Convergence means that all species have been assigned a leaf in the resulting tree.\relax }}{7}{table.caption.2}}
+\newlabel{table:sota_parameters}{{1}{7}{Different combinations of the SOTA parameters, the corresponding speed averaged over two runs and the answer to whether the algorithm converged after 50 iterations for all runs. Convergence means that all species have been assigned a leaf in the resulting tree.\relax }{table.caption.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {7}Results}{7}{section.7}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Comparison of running time}{7}{subsection.7.1}}
-\newlabel{table:distance}{{\caption@xref {table:distance}{ on input line 280}}{7}{Comparison of running time}{table.caption.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Running time of the distance-based methods on the coding dataset. 44 taxa are used. Numbers are based on three test runs.\relax }}{7}{table.caption.2}}
-\newlabel{table:mp}{{\caption@xref {table:mp}{ on input line 295}}{7}{Comparison of running time}{table.caption.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Running time of the exact maximum parsimony method on the coding dataset. Uses branch and bound. Based on three test runs (except for the case with 9 taxa).\relax }}{7}{table.caption.3}}
-\newlabel{table:sota}{{\caption@xref {table:sota}{ on input line 311}}{7}{Comparison of running time}{table.caption.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Running time of the self-growing tree algorithm on the coding dataset. Based on three test runs (except for the case with 44 taxa).\relax }}{7}{table.caption.4}}
 \citation{Prasad2008}
-\citation{Prasad2008}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Running time of the distance-based methods on the coding dataset. 44 taxa are used. The numbers are based on three test runs.\relax }}{8}{table.caption.3}}
+\newlabel{table:distance}{{2}{8}{Running time of the distance-based methods on the coding dataset. 44 taxa are used. The numbers are based on three test runs.\relax }{table.caption.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Running time of the exact maximum parsimony method on the coding dataset. Uses branch and bound. Based on three test runs (except for the case with 9 taxa).\relax }}{8}{table.caption.4}}
+\newlabel{table:mp}{{3}{8}{Running time of the exact maximum parsimony method on the coding dataset. Uses branch and bound. Based on three test runs (except for the case with 9 taxa).\relax }{table.caption.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Running time of the self-growing tree algorithm on the coding dataset. Based on three test runs (except for the case with 44 taxa).\relax }}{8}{table.caption.5}}
+\newlabel{table:sota}{{4}{8}{Running time of the self-growing tree algorithm on the coding dataset. Based on three test runs (except for the case with 44 taxa).\relax }{table.caption.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Running time of the exact maximum parsimony method on the non-coding dataset. Based on two test runs.\relax }}{8}{table.caption.6}}
+\newlabel{table:mp_noncoding}{{5}{8}{Running time of the exact maximum parsimony method on the non-coding dataset. Based on two test runs.\relax }{table.caption.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Running time of the self-growing tree algorithm on the non-coding dataset. Based on two test runs.\relax }}{8}{table.caption.7}}
+\newlabel{table:sota_noncoding}{{6}{8}{Running time of the self-growing tree algorithm on the non-coding dataset. Based on two test runs.\relax }{table.caption.7}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Comparison of accuracy}{8}{subsection.7.2}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {7.2.1}Coding dataset}{8}{subsubsection.7.2.1}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.2.2}Non-coding dataset}{8}{subsubsection.7.2.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The result of neighbor joining run on the coding dataset.\relax }}{9}{figure.caption.5}}
-\newlabel{fig:nj}{{2}{9}{The result of neighbor joining run on the coding dataset.\relax }{figure.caption.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The result of UPGMA run on the coding dataset.\relax }}{9}{figure.caption.6}}
-\newlabel{fig:upgma}{{3}{9}{The result of UPGMA run on the coding dataset.\relax }{figure.caption.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The result of WPGMA run on the coding dataset.\relax }}{10}{figure.caption.7}}
-\newlabel{fig:wpgma}{{4}{10}{The result of WPGMA run on the coding dataset.\relax }{figure.caption.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The result of exact MP with branch and bound run on 9 elements of the coding dataset. Branch length have been adjusted to the parsimonious scores of the nodes.\relax }}{10}{figure.caption.8}}
-\newlabel{fig:mp}{{5}{10}{The result of exact MP with branch and bound run on 9 elements of the coding dataset. Branch length have been adjusted to the parsimonious scores of the nodes.\relax }{figure.caption.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces The result of SOTA run on the coding dataset.\relax }}{11}{figure.caption.9}}
-\newlabel{fig:sota}{{6}{11}{The result of SOTA run on the coding dataset.\relax }{figure.caption.9}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces The result of neighbor joining run on the non-coding dataset.\relax }}{11}{figure.caption.10}}
-\newlabel{fig:nj_noncoding}{{7}{11}{The result of neighbor joining run on the non-coding dataset.\relax }{figure.caption.10}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces The result of UPGMA run on the non-coding dataset.\relax }}{12}{figure.caption.11}}
-\newlabel{fig:upgma_noncoding}{{8}{12}{The result of UPGMA run on the non-coding dataset.\relax }{figure.caption.11}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces The result of WPGMA run on the non-coding dataset.\relax }}{12}{figure.caption.12}}
-\newlabel{fig:wpgma_noncoding}{{9}{12}{The result of WPGMA run on the non-coding dataset.\relax }{figure.caption.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces The result of exact MP with branch and bound run on 8 elements of the non-coding dataset. Branch length have been adjusted to the parsimonious scores of the nodes.\relax }}{13}{figure.caption.13}}
-\newlabel{fig:mp_noncoding_1}{{10}{13}{The result of exact MP with branch and bound run on 8 elements of the non-coding dataset. Branch length have been adjusted to the parsimonious scores of the nodes.\relax }{figure.caption.13}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces The result of exact MP with branch and bound run on 8 elements of the non-coding dataset. Branch length have been adjusted to the parsimonious scores of the nodes.\relax }}{13}{figure.caption.14}}
-\newlabel{fig:mp_noncoding_2}{{11}{13}{The result of exact MP with branch and bound run on 8 elements of the non-coding dataset. Branch length have been adjusted to the parsimonious scores of the nodes.\relax }{figure.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The result of running neighbor joining on the coding dataset.\relax }}{9}{figure.caption.8}}
+\newlabel{fig:nj}{{2}{9}{The result of running neighbor joining on the coding dataset.\relax }{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The result of running UPGMA on the coding dataset.\relax }}{9}{figure.caption.9}}
+\newlabel{fig:upgma}{{3}{9}{The result of running UPGMA on the coding dataset.\relax }{figure.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The result of running WPGMA run the coding dataset.\relax }}{10}{figure.caption.10}}
+\newlabel{fig:wpgma}{{4}{10}{The result of running WPGMA run the coding dataset.\relax }{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The result of running the exact MP method with branch and bound on 9 elements of the coding dataset. Branch lengths have been adjusted to the parsimonious scores of the nodes.\relax }}{10}{figure.caption.11}}
+\newlabel{fig:mp}{{5}{10}{The result of running the exact MP method with branch and bound on 9 elements of the coding dataset. Branch lengths have been adjusted to the parsimonious scores of the nodes.\relax }{figure.caption.11}{}}
+\citation{Prasad2008}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces The result of running SOTA on the coding dataset.\relax }}{11}{figure.caption.12}}
+\newlabel{fig:sota}{{6}{11}{The result of running SOTA on the coding dataset.\relax }{figure.caption.12}{}}
 \citation{Zvelebil2007}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{14}{section.8}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.2.2}Non-coding dataset}{12}{subsubsection.7.2.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{12}{section.8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces The result of running neighbor joining on the non-coding dataset.\relax }}{13}{figure.caption.13}}
+\newlabel{fig:nj_noncoding}{{7}{13}{The result of running neighbor joining on the non-coding dataset.\relax }{figure.caption.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces The result of running UPGMA on the non-coding dataset.\relax }}{13}{figure.caption.14}}
+\newlabel{fig:upgma_noncoding}{{8}{13}{The result of running UPGMA on the non-coding dataset.\relax }{figure.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces The result of running WPGMA on the non-coding dataset.\relax }}{14}{figure.caption.15}}
+\newlabel{fig:wpgma_noncoding}{{9}{14}{The result of running WPGMA on the non-coding dataset.\relax }{figure.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces The result of running the exact MP method with branch and bound on 8 elements of the non-coding dataset. Branch lengths have been adjusted to the parsimonious scores of the nodes.\relax }}{14}{figure.caption.16}}
+\newlabel{fig:mp_noncoding_1}{{10}{14}{The result of running the exact MP method with branch and bound on 8 elements of the non-coding dataset. Branch lengths have been adjusted to the parsimonious scores of the nodes.\relax }{figure.caption.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces The result of running the exact MP method with branch and bound on 8 elements of the non-coding dataset. Branch lengths have been adjusted to the parsimonious scores of the nodes.\relax }}{15}{figure.caption.17}}
+\newlabel{fig:mp_noncoding_2}{{11}{15}{The result of running the exact MP method with branch and bound on 8 elements of the non-coding dataset. Branch lengths have been adjusted to the parsimonious scores of the nodes.\relax }{figure.caption.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces The result of running SOTA on the non-coding dataset.\relax }}{15}{figure.caption.18}}
+\newlabel{fig:sota_noncoding}{{12}{15}{The result of running SOTA on the non-coding dataset.\relax }{figure.caption.18}{}}
+\citation{Hickey2008}
 \bibstyle{unsrtnat}
 \bibdata{report}
 \bibcite{DeBruyn2013}{{1}{2013}{{Bruyn et~al.}}{{Bruyn, Martin, and Lefeuvre}}}
@@ -107,4 +119,22 @@
 \bibcite{dataset}{{12}{2008}{{Center}}{{}}}
 \bibcite{Prasad2008}{{13}{2008}{{Prasad et~al.}}{{Prasad, Allard, and and}}}
 \bibcite{Zvelebil2007}{{14}{2007}{{Zvelebil}}{{}}}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Functionality tests}{16}{appendix.A}}
+\bibcite{Hickey2008}{{15}{2008}{{Hickey et~al.}}{{Hickey, Dehne, Rau-Chaplin, and Blouin}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Functionality testing}{18}{appendix.A}}
+\newlabel{sec:functionality_testing}{{A}{18}{Functionality testing}{appendix.A}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Running time of Biopython's implementation of NJ and UPGMA on the coding dataset. 44 taxa are used. The numbers are based on three test runs.\relax }}{18}{table.caption.19}}
+\newlabel{table:distance_biopython}{{7}{18}{Running time of Biopython's implementation of NJ and UPGMA on the coding dataset. 44 taxa are used. The numbers are based on three test runs.\relax }{table.caption.19}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Running time of Biopython's implementation of NJ and UPGMA on the non-coding dataset. 44 taxa are used. The numbers are based on three test runs.\relax }}{18}{table.caption.20}}
+\newlabel{table:distance_biopython_2}{{8}{18}{Running time of Biopython's implementation of NJ and UPGMA on the non-coding dataset. 44 taxa are used. The numbers are based on three test runs.\relax }{table.caption.20}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces One of the datasets I created for testing purposes. For a dataset of this size, one can expect that there are multiple optimal solutions.\relax }}{18}{table.caption.21}}
+\newlabel{table:test_data}{{9}{18}{One of the datasets I created for testing purposes. For a dataset of this size, one can expect that there are multiple optimal solutions.\relax }{table.caption.21}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces The result of running the exact MP on the test dataset (shown in Table \ref  {table:test_data}). Parsimonious scores are shown next to the corresponding inner nodes.\relax }}{18}{figure.caption.22}}
+\newlabel{fig:test}{{13}{18}{The result of running the exact MP on the test dataset (shown in Table \ref {table:test_data}). Parsimonious scores are shown next to the corresponding inner nodes.\relax }{figure.caption.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces The result of running Biopython's neighbor joining on the coding dataset.\relax }}{19}{figure.caption.23}}
+\newlabel{fig:nj_coding_bio}{{14}{19}{The result of running Biopython's neighbor joining on the coding dataset.\relax }{figure.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces The result of running Biopython's UPGMA on the coding dataset.\relax }}{19}{figure.caption.24}}
+\newlabel{fig:upgma_coding_bio}{{15}{19}{The result of running Biopython's UPGMA on the coding dataset.\relax }{figure.caption.24}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces The result of running Biopython's neighbor joining on the non-coding dataset.\relax }}{20}{figure.caption.25}}
+\newlabel{fig:nj_noncoding_bio}{{16}{20}{The result of running Biopython's neighbor joining on the non-coding dataset.\relax }{figure.caption.25}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces The result of running Biopython's UPGMA on the non-coding dataset.\relax }}{20}{figure.caption.26}}
+\newlabel{fig:upgma_noncoding_bio}{{17}{20}{The result of running Biopython's UPGMA on the non-coding dataset.\relax }{figure.caption.26}{}}

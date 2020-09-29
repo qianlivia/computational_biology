@@ -158,12 +158,14 @@ class SOTA():
         self.mapping_inv = {}
         self.mapping_inv[inner_clade] = []
 
-    def train(self, epochs: int = 50, eta: float = 0.5, alpha: list = [0.5, 0.02, 0.01], b = 0):
+    def train(self, epochs: int = 50, eta: float = 0.5, alpha: list = [0.5, 0.025, 0.02], b = 0):
         """
         The algorithm.
 
         epochs: number of epochs for adaptation
         eta: learning rate
+        alpha: update rate for the current cell, the parent cell and the sister cell (in this order)
+        b: slope
         """
 
         self.epochs = epochs

@@ -44,13 +44,6 @@ class ParsimonyExact(Parsimony):
         self._DFS_trees(trees, 1)
         self.trees = [self.create_tree(tree) for tree in self.trees]
         self.tree = self.create_tree(self.tree)
-        
-        # Print trees
-        """
-        for tree in self.trees:
-            print(tree)
-            print()
-        """
 
         print("Number of trees considered as local maxima:", len(self.trees))
 

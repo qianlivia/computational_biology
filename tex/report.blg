@@ -6,45 +6,45 @@ Database file #1: report.bib
 Warning--empty author in 1987
 Warning--empty journal in Stoye2009
 Warning--empty journal in dataset
-You've used 14 entries,
+You've used 15 entries,
             2481 wiz_defined-function locations,
-            658 strings with 7019 characters,
-and the built_in function-call counts, 5174 in all, are:
-= -- 485
-> -- 155
+            667 strings with 7258 characters,
+and the built_in function-call counts, 5633 in all, are:
+= -- 524
+> -- 182
 < -- 13
-+ -- 72
-- -- 44
-* -- 372
-:= -- 794
-add.period$ -- 55
-call.type$ -- 14
-change.case$ -- 25
-chr.to.int$ -- 14
-cite$ -- 18
-duplicate$ -- 288
-empty$ -- 507
-format.name$ -- 61
-if$ -- 1124
++ -- 82
+- -- 52
+* -- 416
+:= -- 871
+add.period$ -- 60
+call.type$ -- 15
+change.case$ -- 27
+chr.to.int$ -- 15
+cite$ -- 19
+duplicate$ -- 307
+empty$ -- 545
+format.name$ -- 70
+if$ -- 1219
 int.to.chr$ -- 1
-int.to.str$ -- 15
-missing$ -- 15
-newline$ -- 90
-num.names$ -- 39
-pop$ -- 115
+int.to.str$ -- 16
+missing$ -- 16
+newline$ -- 97
+num.names$ -- 42
+pop$ -- 120
 preamble$ -- 1
-purify$ -- 14
+purify$ -- 15
 quote$ -- 0
-skip$ -- 168
+skip$ -- 177
 stack$ -- 0
-substring$ -- 266
-swap$ -- 58
+substring$ -- 292
+swap$ -- 61
 text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 92
+type$ -- 99
 warning$ -- 3
-while$ -- 44
+while$ -- 47
 width$ -- 0
-write$ -- 209
+write$ -- 226
 (There were 3 warnings)

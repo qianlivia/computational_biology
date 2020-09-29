@@ -32,6 +32,7 @@ class ParsimonyClade(Clade):
         super(ParsimonyClade, self).__init__(branch_length, name, clades, confidence, color, width)
         self.sets = sets
         self.score = score
+        self.show_scores = False
 
     def copy(self):
         """
@@ -176,22 +177,21 @@ class Parsimony():
 
         returns: the label belonging to the current clade
         """
-        if clade.name is None:
-            return ""
-        if clade.name.startswith("Inner"):
+        if clade.name is None or clade.name.startswith("Inner") or clade.name == "":
+            if self.show_scores:
+                return clade.score
             return ""
         return clade.name.replace("_", " ").split("/")[0]
 
-    def draw_tree(self, show_branch_labels: bool = False):
+    def draw_tree(self, show_scores: bool = False):
         """
         Draws tree.
 
-        show_branch_labels: show branch lengths (optional); default is False
+        show_scores: show branch parsimonious scores (optional); default is False
         """
+        self.show_scores = show_scores
+        
         if self.tree is None:
             print("Please first build the tree.")
         else:
-            if show_branch_labels:
-                draw(self.tree, label_func=self.get_label, branch_labels=(lambda clade: clade.branch_length))
-            else:
-                draw(self.tree, label_func=self.get_label)
+            draw(self.tree, label_func=self.get_label)

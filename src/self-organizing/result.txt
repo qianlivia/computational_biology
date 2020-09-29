@@ -4,6 +4,15 @@
 4: Self-organizing tree network ran in 55.17722153663635 seconds.
 5: Self-organizing tree network ran in 98.02581882476807 seconds.
 5: Self-organizing tree network ran in 89.6685688495636 seconds.
+6: Self-organizing tree network ran in 116.4447226524353 seconds.
+6: Self-organizing tree network ran in 117.64509177207947 seconds.
+6: Self-organizing tree network ran in 117.76412034034729 seconds.
+7: Self-organizing tree network ran in 193.7569179534912 seconds.
+7: Self-organizing tree network ran in 172.8139111995697 seconds.
 
 Non-coding
+6: Self-organizing tree network ran in 840.67533659935 seconds.
+6: Self-organizing tree network ran in 810.2060506343842 seconds.
+8: Self-organizing tree network ran in 1685.6939060688019 seconds.
+8: Self-organizing tree network ran in 1681.2723791599274 seconds.
 44: Self-organizing tree network ran in 309065.82201194763 seconds. Different setting!
