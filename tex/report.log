@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.27)  29 SEP 2020 20:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.8.27)  29 SEP 2020 20:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -886,12 +886,7 @@ File: img/mp_9_taxa_heuristic.png Graphic file (type png)
 <use img/mp_9_taxa_heuristic.png>
 Package pdftex.def Info: img/mp_9_taxa_heuristic.png  used on input line 253.
 (pdftex.def)             Requested size: 401.22942pt x 227.91547pt.
- [6]
-Overfull \hbox (11.40695pt too wide) in paragraph at lines 270--283
- [][] 
- []
-
-[7 <./img/mp_9_taxa_heuristic.png>]
+ [6] [7 <./img/mp_9_taxa_heuristic.png>]
 <img/nj.png, id=207, 712.46175pt x 402.303pt>
 File: img/nj.png Graphic file (type png)
 <use img/nj.png>
@@ -917,8 +912,8 @@ File: img/sota.png Graphic file (type png)
 <use img/sota.png>
 Package pdftex.def Info: img/sota.png  used on input line 406.
 (pdftex.def)             Requested size: 472.03123pt x 262.49414pt.
- [8] [9 <./img/nj.png> <./img/upgma.png>]
-[10 <./img/wpgma.png> <./img/mp_9_taxa.png>]
+ [8] [9 <./img/nj.png> <./img/upgma.png>] [10 <./img/wpgma.png> <./img/mp_9_tax
+a.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1025,7 +1020,7 @@ amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 sy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on report.pdf (20 pages, 907826 bytes).
+Output written on report.pdf (20 pages, 907822 bytes).
 PDF statistics:
  422 PDF objects out of 1000 (max. 8388607)
  353 compressed objects within 4 object streams
